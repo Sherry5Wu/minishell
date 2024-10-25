@@ -104,3 +104,25 @@ void	print_cmd(void)// for test !!!!!!!!!!!!!!!!!!!!!!!!
 	}
 	printf ("\n\n");
 }
+
+
+void	print_env(char *name, int size)
+{
+	t_list	*head;
+	int		i;
+	t_env	*env;
+
+	head = ms()->env_list;
+	i = 0;
+	while (ms()->env[i] && !ft_strnstr(ms()->env[i], name, size))
+		i++;
+	while (head)
+	{
+		env = (t_env *)(head->content);
+		if (!ft_strcmp(env->name, name))
+			break ;
+		head = head->next;
+	}
+	printf("ms()->env[%d]=%s\n", i, ms()->env[i]);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	printf("env->name=%s\nenv->value=%s\n\n", env->name, env->value);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+}

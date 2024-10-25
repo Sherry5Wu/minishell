@@ -12,7 +12,7 @@ char	*prompt()
 	char	*str;
 	char	*str2;
 
-	str = ft_strjoin(GREEN"minishell:"RESET_C , ms()->cwd);// delete the color settings
+	str = ft_strjoin(GREEN"minishell:"RESET_C , ms()->cwd);// delete the color settings/////////////
 	if (!str)
 		return(NULL);
 	str2 = ft_strjoin(str,"$ ");
@@ -31,7 +31,6 @@ void	buildshell()
 	{
 
 		ms()->prompt = prompt();
-//		printf("prompt=%s\n", ms()->prompt);// for testing!!!!!!
 		ms()->input = readline(ms()->prompt);
 		ms()->lines++;
 		if(!ms()->input)
@@ -45,6 +44,9 @@ void	buildshell()
 			if (pre_handle())
 				exe(ms()->cmds);
 		}
+	// printf ("In buildshell:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 		restart(0);
 	}
 }

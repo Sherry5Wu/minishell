@@ -34,32 +34,50 @@ static inline void	ft_execve_failed(char **shellcmd, char *path)
 	if (path)
 		free(path);
 }
-
+/*
+	For example,
+	export: the input might be "expor" or "exporta"
+*/
 int		builtin(char **cmd)
 {
 	int	size;
 
 	size = ft_strlen(cmd[0]);
-//	printf("cmd[0]=%s\n", cmd[0]);//for testing!!!!!!!!!!!!!!!!!!
-	if (!ft_strncmp(cmd[0], "env",size))
-		return(ft_env());
-	else if (!ft_strncmp(cmd[0], "cd",size))
-		return(ft_cd(cmd));
-	else if (!ft_strncmp(cmd[0], "echo",size))
-		return(ft_echo(cmd));
-	else if (!ft_strncmp(cmd[0], "pwd",size))
+	if (size == 2)
 	{
-		ft_printf("%s\n",getcwd(NULL,2048));
-		return (1);
+		if (!ft_strncmp(cmd[0], "cd",size))
+			return(ft_cd(cmd));
 	}
-	else if (!ft_strncmp(cmd[0], "unset",size))
-		return(ft_unset(cmd));
-	else if (!ft_strncmp(cmd[0], "export",size))
-		return(ft_export(cmd));
-	else if (!ft_strncmp(cmd[0], "exit",size))
-		ft_exit(cmd);
+	else if (size == 3)
+	{
+		if (!ft_strncmp(cmd[0], "env",size))
+			return(ft_env());
+		else if (!ft_strncmp(cmd[0], "pwd",size))
+		{
+			ft_printf("%s\n",getcwd(NULL,2048));
+			return (1);
+		}
+	}
+	else if (size == 4)
+	{
+		if (!ft_strncmp(cmd[0], "echo",size))
+			return(ft_echo(cmd));
+		else if (!ft_strncmp(cmd[0], "exit",size))
+			ft_exit(cmd);
+	}
+	else if (size == 5)
+	{
+		if (!ft_strncmp(cmd[0], "unset",size))
+			return(ft_unset(cmd));
+	}
+	else if (size == 6)
+	{
+		if (!ft_strncmp(cmd[0], "export",size))
+			return(ft_export(cmd));
+	}
 	return(0);
 }
+
 void	real_execute(t_cmd *cm)
 {
 	char	*path;
@@ -72,6 +90,9 @@ void	real_execute(t_cmd *cm)
 		execve(path, cm->cmd, ms()->env);
 		ft_execve_failed(cm->cmd, path);
 	}
+	// printf ("In Real_execute:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	exit(ms()->exit);
 }
 
@@ -104,5 +125,10 @@ void exe(t_cmd *cm)
 	close_all(prev_fd);
 	while (wait(NULL) > 0);
 	signal_default();
+
+	// printf ("In exe:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
 }
 

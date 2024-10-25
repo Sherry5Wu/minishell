@@ -11,7 +11,7 @@ There are bugs in these function:
 5. export: can't add new a variable or replace the old variable.
 
 Going to test 'unset'
- add checking delete_empty_token()function
+ fix export error????????
 
 
 ———————————— builtins

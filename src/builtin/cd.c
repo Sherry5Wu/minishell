@@ -16,6 +16,7 @@ void	update_dir(char *dir, char *name, int size)
 {
 	t_list	*head;
 	int		i;
+	t_env	*env;
 
 	head = ms()->env_list;
 	i = 0;
@@ -23,12 +24,13 @@ void	update_dir(char *dir, char *name, int size)
 		i++;
 	while (head)
 	{
-		if (!ft_strnstr(head->content, "OLDPWD", 6))
+		env = (t_env *)(head->content);
+		if (!ft_strcmp(env->name, name))
 			break ;
 		head = head->next;
 	}
 	ms()->env[i] = ft_strdup(dir);
-	head->content = ft_strdup(dir);
+	env->value = ft_strdup(ms()->cwd);
 }
 
 void	cddir(char	*path)
@@ -57,7 +59,7 @@ void	cddir(char	*path)
 	free(dir);
 }
 
-int	checkcd(char	**cmd)
+void	checkcd(char	**cmd)
 {
 	int	i;
 
@@ -66,20 +68,14 @@ int	checkcd(char	**cmd)
 		i++;
 	if (i > 2)
 		ex_error(cmd[0], TOOMUCH, 1);
-	i = 0;
-	while (ms()->env[i] && !ft_strnstr(ms()->env[i], "HOME", 4))
-		i++;
-	return (i);
 }
 
 int	ft_cd(char **cmd)
 {
 	struct stat	cur_stat;
-	int			i;
 
-	i = checkcd(cmd);
 	if (!cmd[1] || !ft_strcmp(cmd[1], "~"))
-		cddir(ms()->env[i]);
+		cddir(getenv("HOME"));
 	else
 	{
 		stat(cmd[1], &cur_stat);
@@ -93,5 +89,9 @@ int	ft_cd(char **cmd)
 			ms()->exit = 1;
 		}
 	}
+	printf ("After update the pwd:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	return (1);
 }
+

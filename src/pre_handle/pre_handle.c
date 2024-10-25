@@ -94,6 +94,7 @@ static void	add_variable_type(t_list *list)
 {
 	t_token	*token;
 	t_token	*next;
+	t_list	*tmp;
 
 	if (!list)
 		return ;
@@ -102,9 +103,18 @@ static void	add_variable_type(t_list *list)
 		token = (t_token *)(list->content);
 		if (ft_strcmp(token->str, "export") == 0 && list->next)
 		{
-			next = (t_token *)(list->next->content);
-			if (ft_strchr(next->str, '='))
-				next->tk_type = TK_ENV_V;
+			tmp = list->next;
+			while (tmp)
+			{
+				next = (t_token *)(tmp->content);
+				if (ft_strchr(next->str, '='))
+				{
+					next->tk_type = TK_ENV_V;
+					tmp = tmp->next;
+				}
+				else
+					break ;
+			}
 		}
 		if (ft_strchr(token->str, '=') && token->tk_type != TK_ENV_V)
 			token->tk_type = TK_LOC_V;

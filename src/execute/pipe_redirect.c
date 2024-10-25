@@ -31,6 +31,7 @@ pid_t exe_pipe2(t_cmd *cm)
 	int status;
 	int	i;
 	int	ofd;
+
 	signal_ignore();
 	pid = fork();
  	if (pid == -1)
@@ -42,7 +43,6 @@ pid_t exe_pipe2(t_cmd *cm)
 		ofd = 0;
 		while(i < cm->ofnum - 1)
 		{
-
 			ofd =open(cm->outfile[i++], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if(ofd == -1)
 			{
@@ -67,6 +67,11 @@ pid_t exe_pipe2(t_cmd *cm)
 	}
 	waitpid(pid,&status,0);
 	ms()->exit = WEXITSTATUS(status);
+
+// printf ("In exe_pipe2:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+// print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+// print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
 	return(pid);
 }
 

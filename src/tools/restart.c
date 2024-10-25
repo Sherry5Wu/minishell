@@ -25,11 +25,7 @@ void free_list(t_list *head)
 	}
 }
 void restart(int ex)
-{//old code
-	// if(!ms()->prompt)
-	// 	free(ms()->prompt);
-	// if(!ms()->input)
-	// 	free(ms()->input);
+{
 	if (ms()->prompt)
 		free(ms()->prompt);
 	if(ms()->input)
@@ -40,6 +36,10 @@ void restart(int ex)
 	ms()->out_fd = STDOUT_FILENO;
 	free_token_list();
 	free_cmd_list();
+	// printf ("In restart:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
 	if(ex)
 	{
 		free(ms()->cwd);

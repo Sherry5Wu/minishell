@@ -177,4 +177,5 @@ void	add_node_to_list(t_list **list, char *str);
 # define RESET_C		"\033[0m"
 void	print_list(t_list *list, int flag); // for testing!!!!!!!!!!!11
 void	print_cmd(void);// for testing!!!!!!!!!!!11
+void	print_env(char *name, int size);
 # endif
