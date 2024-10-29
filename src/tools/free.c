@@ -52,6 +52,26 @@ void	free_token_list(void)
 	}
 	ms()->tokens = NULL;
 }
+static void	free_iolist(t_list *list)
+{
+	t_list	*temp;
+	t_list	*next_node;
+	t_env	*var;
+
+	if (list == NULL)
+		return ;
+	temp = list;
+	while (temp)
+	{
+		var = (t_env *)temp->content;
+		next_node = temp->next;
+		ft_free_str(var->name);
+		ft_free_str(var->value);
+		free(temp);
+		temp = next_node;
+	}
+	list = NULL;
+}
 
 void	free_cmd_list(void)
 {
@@ -69,6 +89,7 @@ void	free_cmd_list(void)
 		ft_free_str(ms()->cmds->of);
 		ft_free_str(ms()->cmds->inf);
 		free(ms()->cmds);
+		free_iolist(ms()->cmds->iolist);
 		ms()->cmds = next_cmd;
 	}
 	ms()->cmds = NULL;

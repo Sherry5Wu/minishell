@@ -14,11 +14,16 @@
 
 static void	handle_in_re(t_cmd **cmd, t_list *tk_node)
 {
+	t_env	*redir;
+	t_token	*token;
+
+	token = (t_token *)tk_node->content;
 	(*cmd)->intype = TK_IN_RE;
-	(*cmd)->infile[(*cmd)->ct_in++]
-		= ft_strdup(((t_token *)((tk_node)->content))->arg);
+	(*cmd)->infile[(*cmd)->ct_in++] = ft_strdup(token->arg);
 	if ((*cmd)->ct_in == (*cmd)->ifnum)
-		(*cmd)->inf = ft_strdup(((t_token *)((tk_node)->content))->arg);
+		(*cmd)->inf = ft_strdup(token->arg);
+	redir = new_variable("2", (token->arg));
+	ft_lstadd_back(&((*cmd)->iolist), ft_lstnew(redir));
 }
 
 static void	handle_hdoc(t_cmd **cmd, t_list *tk_node)
@@ -30,11 +35,25 @@ static void	handle_hdoc(t_cmd **cmd, t_list *tk_node)
 
 static void	handle_out_re(t_cmd **cmd, t_list *tk_node)
 {
-	(*cmd)->outype = ((t_token *)(tk_node->content))->tk_type;
+	t_env	*redir;
+	t_token	*token;
+
+	token = (t_token *)tk_node->content;
+	(*cmd)->outype = token->tk_type;
 	(*cmd)->outfile[(*cmd)->ct_out++]
-		= ft_strdup(((t_token *)((tk_node)->content))->arg);
+		= ft_strdup(token->arg);
 	if ((*cmd)->ct_out == (*cmd)->ofnum)
-		(*cmd)->of = ft_strdup(((t_token *)((tk_node)->content))->arg);
+		(*cmd)->of = ft_strdup(token->arg);
+	if (token->tk_type == TK_OUT_RE)
+	{
+		redir = new_variable("3", (token->arg));
+		ft_lstadd_back(&((*cmd)->iolist), ft_lstnew(redir));
+	}
+	else
+	{
+		redir = new_variable("5", token->arg);
+		ft_lstadd_back(&((*cmd)->iolist), ft_lstnew(redir));
+	}
 }
 
 void	process_re(t_cmd **cmd, t_list *tk_node)

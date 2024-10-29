@@ -107,7 +107,7 @@ printf ("add_env 2 ms()->env[%d]=%s\n", i-1 , ms()->env[i-1]);// for testing!!!!
 	free(new_env);
 }
 
-void		update_or_add(char	*str)
+void	update_or_add(char	*str)
 {
 	int		i;
 	char	*name;
@@ -121,15 +121,26 @@ void		update_or_add(char	*str)
 	name = ft_strndup(str,size);
 	printf ("1-name=%s\n", name);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	i = 0;
+	printf ("beore while loop\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	printf("ms()->env[%d]=%s\n", i, ms()->env[i]);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	printf("ft_strnstr(ms()->env[i], name, size)=%s\n", ft_strnstr(ms()->env[i], name, size));// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	while (ms()->env[i] && !ft_strnstr(ms()->env[i], name, size))
-			i++;
+	{
+		i++;
+		printf ("i=%d\n", i);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	}
+
+	printf ("out of while loop i=%d\n", i);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	printf("ms()->env[%d]=%s\n", i, ms()->env[i]);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	if (!ms()->env[i])
 		add_env(str);
 	else
 	{
+		printf("<-----------------1------------------- >>\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 		free(ms()->env[i]);
 		ms()->env[i] = ft_strdup(str);
 	}
+	printf("<-----------------2------------------- >>\n");// for testing!!!!!!!!!!!!!!!!!!!!
 	add_node_to_list(&ms()->env_list, str);// in add_node_to_list() it will check if the env exist or not
 
 	printf ("\nupdate_or_add:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
@@ -183,14 +194,17 @@ int	ft_export(char	**cmd)
 
 	i = 1;
 	status = 1;
-// 	printf("size=%d\n", count_array_size(cmd));//for testing!!!!!!!11111
-// for(int j=0; j <  count_array_size(cmd); j++)
-// 	printf("cmd[%d]=\n", j, cmd[j]);//for testing!!!!!!!11111!!!!!!!!!!!!!!!!!!!!!!!!!
+	printf("size=%d\n", count_array_size(cmd));//for testing!!!!!!!11111
+	for(int j=0; j <  count_array_size(cmd); j++)
+	{
+		printf("cmd[%d]=%s\n", j, cmd[j]);//for testing!!!!!!!11111!!!!!!!!!!!!!!!!!!!!!!!!!
+	}
+
 	if (!cmd[1])
 		return (print_sorted_env());
 	while (cmd[i])
 	{
-		printf("cmd[%d]=%s\n", i, cmd[i]);//for testing!!!!!!!!!!!!!!!!!!1
+		printf("\ncmd[%d]=%s\n", i, cmd[i]);//for testing!!!!!!!!!!!!!!!!!!1
 		if (ft_isalpha(cmd[i][0]) || cmd[i][0] == '_')
 		{
 			if (ft_strchr(cmd[i], '='))

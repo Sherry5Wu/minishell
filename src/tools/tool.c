@@ -6,7 +6,7 @@
 /*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:04:56 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/23 14:15:34 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/10/28 09:30:03 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,35 @@ void	set_error(char *message)
 	}
 	ft_putchar_fd('\n', 2);
 }
-void	set_fd(t_cmd *cm)
+int	set_fd(t_cmd *cm)
 {
+	int	i;
+	int	ofd;
+	i = 0;
+		ofd = 0;
+	while(i < cm->ofnum - 1)
+	{
 
+			ofd =open(cm->outfile[i++], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if(ofd == -1)
+			{
+				close_inout();
+				set_error(cm->outfile[--i]);
+				return(0);
+			}
+			close(ofd);
+	}
 	if (cm->intype == TK_IN_RE)
 		(ms()->in_fd) = open(cm->inf, O_RDONLY, 0444);
 	if (cm->intype == TK_PIPE)
 		(ms()->in_fd) = ms()->fd[0];
+
 	if (ms()->in_fd == -1)
+	{
 		set_error(cm->inf);
-	else if (cm->outype  == TK_OUT_RE)
+	return(0);
+	}
+	if (cm->outype  == TK_OUT_RE)
 		(ms()->out_fd) = open(cm->of, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (cm->outype == TK_APPEND)
 		(ms()->out_fd) = open(cm->of, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -87,6 +106,7 @@ void	set_fd(t_cmd *cm)
 		(ms()->out_fd) = STDOUT_FILENO;
 	if (ms()->out_fd == -1)
 		set_error(cm->of);
+	return(1);
 }
 
 char *replace_first_substring(char *str, char *old_sub, char *new_sub)

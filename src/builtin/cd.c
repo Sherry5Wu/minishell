@@ -59,7 +59,7 @@ void	cddir(char	*path)
 	free(dir);
 }
 
-void	checkcd(char	**cmd)
+int	checkcd(char	**cmd)
 {
 	int	i;
 
@@ -68,14 +68,20 @@ void	checkcd(char	**cmd)
 		i++;
 	if (i > 2)
 		ex_error(cmd[0], TOOMUCH, 1);
+	i = 0;
+	while (ms()->env[i] && !ft_strnstr(ms()->env[i], "HOME", 4))
+		i++;
+	return (i);
 }
 
 int	ft_cd(char **cmd)
 {
 	struct stat	cur_stat;
+	int			i;
 
+	i = checkcd(cmd);
 	if (!cmd[1] || !ft_strcmp(cmd[1], "~"))
-		cddir(getenv("HOME"));
+		cddir(ms()->env[i]);
 	else
 	{
 		stat(cmd[1], &cur_stat);
@@ -89,9 +95,9 @@ int	ft_cd(char **cmd)
 			ms()->exit = 1;
 		}
 	}
-	printf ("After update the pwd:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// printf ("After update the pwd:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	return (1);
 }
 

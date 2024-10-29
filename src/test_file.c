@@ -28,12 +28,12 @@ void	print_list(t_list *list, int flag)// for test !!!!!!!!!!!!!!!!!!!!!!!!
 		else if (flag == 2)
 		{
 			env = list->content;
-			printf("env[%d]: name=$%s   value=%s\n", i, env->name, env->value);
+			printf("env[%d]: name=%s   value=%s\n", i, env->name, env->value);
 		}
 		else if (flag == 3)
 		{
 			env = list->content;
-			printf("local_var[%d]: name=$%s   value=%s\n", i, env->name, env->value);
+			printf("local_var[%d]: name=%s   value=%s\n", i, env->name, env->value);
 		}
 		i++;
 		list = list->next;
@@ -46,6 +46,7 @@ void	print_cmd(void)// for test !!!!!!!!!!!!!!!!!!!!!!!!
 	t_cmd	*cmd;
 	int  i_cmd = 0;
 	int	j;
+	t_env	*env;
 
 	if (!ms()->cmds)
 	{
@@ -100,8 +101,20 @@ void	print_cmd(void)// for test !!!!!!!!!!!!!!!!!!!!!!!!
 		}
 		printf("\nlast_infile=%s\nlast_outfie=%s", cmd->inf, cmd->of);
 		printf("\nintype=%d\nouttype=%d\n\n", cmd->intype, cmd->outype);
+		if (cmd->iolist)
+		{
+			j = 0;
+			while (cmd->iolist)
+			{
+				env = cmd->iolist->content;
+				printf("env[%d]: name=%s   value=%s\n", j, env->name, env->value);
+				j++;
+				cmd->iolist = cmd->iolist->next;
+			}
+		}
 		cmd = cmd->next;
 	}
+
 	printf ("\n\n");
 }
 

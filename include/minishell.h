@@ -74,8 +74,8 @@ void	close_all(int	prev_fd);
 void	check_infile(t_cmd *cm);
 char	*ft_strndup(char *src, int size);
 char	*replace_first_substring(char *str, char *old_sub, char *new_sub);
-void	set_fd(t_cmd *cm);
-int	ft_strcmp(char *s1, char *s2);
+int		set_fd(t_cmd *cm);
+int		ft_strcmp(char *s1, char *s2);
 void	set_error(char *message);
 /*For execute*/
 /*<-----pipe && redirect----->*/

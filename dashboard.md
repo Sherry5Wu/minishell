@@ -4,10 +4,11 @@ fixed bugs or changes:
 3. export.c: changed ft_valid_character(), ft_export()
 4. cd:
 
- unfixed known bugs:
- 1. export n= 2 --> didn't add n=2 to the env_list and env strs;
-	export n=2 m=3 --> m=3 didn't not add to env_list and env strs;
 
+
+ unfixed known bugs:
+ 1. export n= 2 --> didn't add n=2 to the env_list and env strs;--- fixed.
+	export n=2 m=3 --> m=3 didn't not add to env_list and env strs;
 
  2. cat <<HEREDOC --> segmentation fault
 
@@ -50,6 +51,6 @@ fixed bugs or changes:
 	doesntexist
 	$EMPTY
 	echo $?
+Error: didn't clear the exit code, the exit code is still 1.
 
-5. unset: doesn't unset the variable
 

@@ -163,6 +163,8 @@ typedef struct s_ms
 	ct_out:	the index of outfile dyadic array;
 	ct_del:	the index of limiter dyadic array;
 	ct_w:	the index of cmd dyadic array;
+	in_out_list:	to store all the <, >, and << , and their files in the order
+					they appear.
 */
 typedef struct s_cmd
 {
@@ -182,6 +184,7 @@ typedef struct s_cmd
 	int				ct_out;
 	int				ct_del;
 	int				ct_w;
+	struct s_list	*iolist;
 	struct s_cmd	*next;
 }	t_cmd;
 

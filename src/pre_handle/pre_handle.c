@@ -141,5 +141,7 @@ bool	pre_handle(void)
 	if (!parsing())
 		return (false);
 	recorrect_cmd_intype(ms()->cmds);
+printf("cmd list is:\n");//for testing!!!!!!!!!!!!!!!!!!!!!!!!1
+print_cmd();//for testing!!!!!!!!!!!!!!!!!!!!!!!!1
 	return (true);
 }
