@@ -1,56 +1,64 @@
-fixed bugs or changes:
-1. changed builtin(), to handle input like these "expor" or "exporta"
-2. norm checking for builtin folder, signal folder and pre_handle folder
-3. export.c: changed ft_valid_character(), ft_export()
-4. cd:
+https://github.com/maiadegraaf/minishell/blob/main/src/utils/minishell_loop.c
+
+https://github.com/nenieiri-42Yerevan/Minishell/blob/master/srcs/tokens_array.c#L98
+
+1. ~$ cat <minishell.h>./outfiles/outfile
+	bash: minishell.h: No such file or directory
+
+
+3. $ echo hhhh >>> out
+	bash: syntax error near unexpected token `>'
+
+4. $ cat <<<<infile.txt | echo hi
+	bash: syntax error near unexpected token `<'
 
 
 
- unfixed known bugs:
- 1. export n= 2 --> didn't add n=2 to the env_list and env strs;--- fixed.
-	export n=2 m=3 --> m=3 didn't not add to env_list and env strs;
+Summary, error handling before execution:
 
- 2. cat <<HEREDOC --> segmentation fault
+1. if the command start with '|'								--DONE
+	error: bash: syntax error near unexpected token `|'
 
- 3. # keep track of OLDPWD
-			cd obj
-			echo $PWD $OLDPWD
-			cd: after excute "cd src/", it didn't really go to the src folder
+2. cmd: meta_char (space) meta_char1 (nothing at the back of meta_char 1) -- DONE
+	error: bash: syntax error near unexpected token `meta_char1'
 
-		note:
-			after fixing, I was backtrace the PWD and OLDPWD value, before in in_exe_pipe2()
-			the values were correct. But in in_exe_pipe2() the values are wrong.
-
-		result:
-			minishell:/home/jingwu/projects/minishell$ cd src/
-			After update the pwd:
-			ms()->env[16]=PWD=/home/jingwu/projects/minishell/src
-			env->name=PWD
-			env->value=/home/jingwu/projects/minishell/src
-
-			ms()->env[48]=OLDPWD=/home/jingwu/projects/minishell
-			env->name=OLDPWD
-			env->value=/home/jingwu/projects/minishell
-
-			In Real_execute:
-			ms()->env[16]=PWD=/home/jingwu/projects/minishell/src
-			env->name=PWD
-			env->value=/home/jingwu/projects/minishell/src
-
-			ms()->env[48]=OLDPWD=/home/jingwu/projects/minishell
-			env->name=OLDPWD
-			env->value=/home/jingwu/projects/minishell
-
-			In exe_pipe2:
-			ms()->env[16]=PWD=/home/jingwu/projects/minishell
-			env->name=PWD
-			env->value=/home/jingwu/projects/minishell
+4.	cmd: meta_char (except '|')										-- DONE
+	cmd: meta_char(except '|') infile.txt meta_char1
+	erro: bash: syntax error near unexpected token `newline'
 
 
-4. #invalid command, followed by empty variable, should clear the exit code
-	doesntexist
-	$EMPTY
-	echo $?
-Error: didn't clear the exit code, the exit code is still 1.
+5. ~$ 2name=aaa
+2name=aaa: command not found
 
+
+
+
+
+We DON'T consider implement these conditions:
+1.	cmd: <infile.txt |
+	> cat
+
+	cmd: >outfile |
+	> cat
+
+	cmd: << EOF |
+	> this
+	> is the last line
+	> EOF
+	> cat
+
+2. 	cmd: meta_char
+	cmd: <infile.txt meta_char(except '|')
+	cmd: >outfile.txt meta_char(except '|')
+	cmd: >>outfile.txt meta_char(except '|')
+	erro: bash: syntax error near unexpected token `newline'
+
+3. don't consider this condition: meta_char(no space)meta_char1 .
+
+
+Error when execute:
+
+1. name=abc
+jingwu@c2r5p1:~$ $name
+Command 'abc' not found, but there are 17 similar ones.
 

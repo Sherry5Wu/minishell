@@ -53,12 +53,6 @@ bool	ft_valid_character(char *str)
 	return (true);
 }
 
-// void	update_env(int	i, char	*str)
-// {
-// 	free(ms()->env[i]);
-// 	ms()->env[i] = ft_strdup(str);
-// }
-
 int	count_array_size(char **str)
 {
 	int	i;
@@ -73,38 +67,25 @@ int	count_array_size(char **str)
 }
 /*
 	add a new env to ms()->env.
-*/
-void	add_env(char *str)
+*/void	add_env(char *str)
 {
 	int		i;
 	int		j;
 	char	**new_env;
-printf ("add_env str=%s\n", str);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
 	i = count_array_size(ms()->env);
-printf ("add_env i=%d\n", i);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	new_env = malloc((i + 2) * sizeof(char *));
 	if (new_env == NULL)
 		restart(1);
 	j = -1;
 	while (++j < i)
-		new_env[j] = ms()->env[j];
+		new_env[j] = ft_strdup(ms()->env[j]);
 	new_env[i] = ft_strdup(str);
-	printf ("add_env new_env[%d]=%s\n", i, new_env[i]);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	new_env[i+1] = NULL;
+	new_env[i + 1] = NULL;
 	if (new_env[i] == NULL)
 		restart(1);
-	free(ms()->env);
-	i = -1;
-	while (new_env[++i])
-	{
-		ms()->env[i] = ft_strdup(new_env[i]);
-		if (!ms()->env[i])
-			restart(1);
-	}
-
-printf ("add_env 2 ms()->env[%d]=%s\n", i-1 , ms()->env[i-1]);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!
-
-	free(new_env);
+	pp_free(ms()->env);
+	ms()->env = new_env;
 }
 
 void	update_or_add(char	*str)
@@ -119,34 +100,17 @@ void	update_or_add(char	*str)
 	while (str[size] != '=')
 		size++;
 	name = ft_strndup(str,size);
-	printf ("1-name=%s\n", name);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	i = 0;
-	printf ("beore while loop\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	printf("ms()->env[%d]=%s\n", i, ms()->env[i]);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	printf("ft_strnstr(ms()->env[i], name, size)=%s\n", ft_strnstr(ms()->env[i], name, size));// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	while (ms()->env[i] && !ft_strnstr(ms()->env[i], name, size))
-	{
 		i++;
-		printf ("i=%d\n", i);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	}
-
-	printf ("out of while loop i=%d\n", i);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	printf("ms()->env[%d]=%s\n", i, ms()->env[i]);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	if (!ms()->env[i])
 		add_env(str);
 	else
 	{
-		printf("<-----------------1------------------- >>\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 		free(ms()->env[i]);
 		ms()->env[i] = ft_strdup(str);
 	}
-	printf("<-----------------2------------------- >>\n");// for testing!!!!!!!!!!!!!!!!!!!!
 	add_node_to_list(&ms()->env_list, str);// in add_node_to_list() it will check if the env exist or not
-
-	printf ("\nupdate_or_add:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	printf ("name=%s\n", name);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	print_env(name, 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-
 	free(name);
 }
 
@@ -194,17 +158,10 @@ int	ft_export(char	**cmd)
 
 	i = 1;
 	status = 1;
-	printf("size=%d\n", count_array_size(cmd));//for testing!!!!!!!11111
-	for(int j=0; j <  count_array_size(cmd); j++)
-	{
-		printf("cmd[%d]=%s\n", j, cmd[j]);//for testing!!!!!!!11111!!!!!!!!!!!!!!!!!!!!!!!!!
-	}
-
 	if (!cmd[1])
 		return (print_sorted_env());
 	while (cmd[i])
 	{
-		printf("\ncmd[%d]=%s\n", i, cmd[i]);//for testing!!!!!!!!!!!!!!!!!!1
 		if (ft_isalpha(cmd[i][0]) || cmd[i][0] == '_')
 		{
 			if (ft_strchr(cmd[i], '='))
@@ -219,18 +176,9 @@ int	ft_export(char	**cmd)
 		}
 		else
 			status = export_err(cmd[i]);
-
-	printf ("After added export:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	printf ("name=%s\n", lastequal(cmd[i]));// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	print_env(lastequal(cmd[i]), 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-
 		i++;
 	}
 	if (status)
 		ms()->exit = 0;
-
-printf ("the updated env_list:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-print_list(ms()->env_list, 2);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-
 	return (1);
 }

@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+
 /*
 	@function
 	When receive a SIGINT, it will display a new prompt on a new line.
@@ -35,11 +36,9 @@ void	handle_sigint(int signal)
 		rl_redisplay();
 	}
 }
-
 /*
 	SIGINT's number is 2;
-	ms()->exit = 128 + 2 = 130; (from 128-255 , it means the thread is
-	terminted by keyboard)
+	ms()->exit = 128 + 2 = 130; (from 128-255 , it means the thread is terminted by keyboard)
 */
 void	handle_heredoc(int signal)
 {

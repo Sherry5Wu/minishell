@@ -4,8 +4,8 @@ GREEN := \033[1;92m
 DEFAULT := \033[0;39m
 
 CC := cc
-#-g -O0 is for debugging
-CFLAGS := -Wall -Wextra -Werror -g -O0 \
+
+CFLAGS := -Wall -Wextra -Werror \
 	-I ./include -I ./libft/libft -I ./libft/printf -I ./libft/get_next_line
 
 LIBFT := ./libft/libft
@@ -34,12 +34,12 @@ all: $(NAME)
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $<
 	@echo "Compiling: $(notdir $<)"
-
+#-g is for debugging
 $(NAME): $(OBJS)
 	@${MAKE} -C ${LIBFT}
 	@${MAKE} -C ${PRINTF}
 	@${MAKE} -C ${GETNEXTLINE}
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) -g $(OBJS) $(LIBS) -o $(NAME)
 	@echo "$(GREEN)minishell has been generated.$(DEFAULT)"
 
 clean:

@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 14:24:00 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/15 11:40:34 by jingwu           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -63,16 +52,16 @@ static void	free_iolist(t_list *list)
 	temp = list;
 	while (temp)
 	{
-		var = (t_env *)temp->content;
+
 		next_node = temp->next;
-		ft_free_str(var->name);
-		ft_free_str(var->value);
+		var = (t_env *)temp->content;
+		if (var)
+			free(var);
 		free(temp);
 		temp = next_node;
 	}
 	list = NULL;
 }
-
 void	free_cmd_list(void)
 {
 	t_cmd	*next_cmd;
@@ -82,18 +71,35 @@ void	free_cmd_list(void)
 	while (ms()->cmds)
 	{
 		next_cmd = ms()->cmds->next;
-		pp_free(ms()->cmds->cmd);
-		pp_free(ms()->cmds->infile);
-		pp_free(ms()->cmds->limiter);
-		pp_free(ms()->cmds->outfile);
-		ft_free_str(ms()->cmds->of);
-		ft_free_str(ms()->cmds->inf);
-		free(ms()->cmds);
 		free_iolist(ms()->cmds->iolist);
+		free(ms()->cmds);
 		ms()->cmds = next_cmd;
 	}
 	ms()->cmds = NULL;
 }
+
+// void	free_cmd_list(void)
+// {
+// 	t_cmd	*next_cmd;
+
+// 	if (!ms()->cmds)
+// 		return ;
+// 	while (ms()->cmds)
+// 	{
+// 		next_cmd = ms()->cmds->next;
+// 		pp_free(ms()->cmds->cmd);
+// 		pp_free(ms()->cmds->infile);
+// 		pp_free(ms()->cmds->limiter);
+// 		pp_free(ms()->cmds->outfile);
+// 		ft_free_str(ms()->cmds->of);
+// 		ft_free_str(ms()->cmds->inf);
+// 		free(ms()->cmds);
+// 		free_iolist(ms()->cmds->iolist);
+
+// 		ms()->cmds = next_cmd;
+// 	}
+// 	ms()->cmds = NULL;
+// }
 
 void	free_local_var_list(void)
 {
@@ -114,4 +120,10 @@ void	free_local_var_list(void)
 		temp = next_node;
 	}
 	ms()->local_var = NULL;
+}
+void	free_env(t_env *env)
+{
+	ft_free_str(env->name);
+	ft_free_str(env->value);
+	free(env);
 }

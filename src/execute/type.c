@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:53:18 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/14 13:31:31 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/10/29 17:35:38 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*replace_env(char	*envname, char *src)
+char	*replace_env(char	*envname, char	*src)
 {
 	int		i;
 	int		j;
@@ -22,19 +22,19 @@ char	*replace_env(char	*envname, char *src)
 	replacement = NULL;
 	i = 1;
 	j = 0;
-	while(isprint(envname[i]) && envname[i] != ' ' && envname[i] != '\0')
+	while (isprint(envname[i]) && envname[i] != ' ' && envname[i] != '\0')
 		i++;
 	dest = ft_strndup(envname, i);
 	if (dest == NULL)
 		return (NULL);
 	while (ms()->env[j] && !ft_strnstr(ms()->env[j], dest + 1, i - 1))
 		j++;
-	if(!ms()->env[j])
+	if (!ms()->env[j])
 		replacement = "";
 	else
 		replacement = ms()->env[j] + i;
-	dest = replace_first_substring(src,dest, replacement);
-	return(dest);
+	dest = replace_first_substring(src, dest, replacement);
+	return (dest);
 }
 
 static	char	*checkdollar(char	*doc_in)
@@ -43,9 +43,9 @@ static	char	*checkdollar(char	*doc_in)
 	int		i;
 
 	i = 0;
-	while(doc_in[i])
+	while (doc_in[i])
 	{
-		dc = ft_strchr(doc_in + i,'$');
+		dc = ft_strchr(doc_in + i, '$');
 		if (dc && *(dc + 1) && *(dc + 1) != '\n' && *(dc + 1) != ' ')
 		{
 			doc_in = replace_env(dc, doc_in);
@@ -56,20 +56,25 @@ static	char	*checkdollar(char	*doc_in)
 	return (doc_in);
 }
 
-void	getdoc(char *av,int hfd)
+void	getdoc(char *av, int hfd)
 {
 	char	*doc_in;
 
+	ms()->heredoc_count = 0;
 	while (1)
 	{
 		doc_in = get_next_line(0);
-		if(!doc_in)
-			continue;
+		if (!doc_in)
+		{
+			ms()->heredoc_count = -1;
+			free(doc_in);
+			break ;
+		}
 		doc_in = checkdollar(doc_in);
 		if (ft_strncmp(doc_in, av, ft_strlen(av)) == 0)
 		{
 			free(doc_in);
-			break;
+			break ;
 		}
 		ft_putstr_fd(doc_in, hfd);
 		free(doc_in);
@@ -78,16 +83,14 @@ void	getdoc(char *av,int hfd)
 
 void	type_hdoc(t_cmd *cm)
 {
-	int	i;
-
-	i = 0;
+	ms()->limiter_count = 0;
 	signal_heredoc();
-	while(cm->herenum--)
+	while (cm->herenum--)
 	{
-		ms()->hfd = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0644);
+		(ms()->hfd) = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (ms()->hfd == -1)
 			open_error("here_doc");
-		getdoc(cm->limiter[i++],ms()->hfd);
+		getdoc(cm->limiter[ms()->limiter_count++], ms()->hfd);
 		close(ms()->hfd);
 	}
 	if (cm->intype == TK_HDOC)
@@ -102,6 +105,7 @@ void	type_hdoc(t_cmd *cm)
 pid_t	type_outpipe(t_cmd *cm, int	*prev_fd)
 {
 	pid_t	pipeid;
+
 	if (pipe(ms()->fd) == -1)
 		ex_error("Pipe", PIPE, EXIT_FAILURE);
 	pipeid = exe_pipe(cm);
@@ -109,5 +113,5 @@ pid_t	type_outpipe(t_cmd *cm, int	*prev_fd)
 	if (*prev_fd != -1)
 		close(*prev_fd);
 	*prev_fd = ms()->fd[0];
-	return(pipeid);
+	return (pipeid);
 }

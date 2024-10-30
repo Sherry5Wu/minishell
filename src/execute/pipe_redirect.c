@@ -1,63 +1,67 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_redirect.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/29 16:54:18 by yzheng            #+#    #+#             */
+/*   Updated: 2024/10/29 17:37:32 by yzheng           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t exe_pipe(t_cmd *cm)
+void	get_status(pid_t	pid)
+{
+	int	status;
+
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		ms()->exit = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		ms()->exit = 128 + WTERMSIG(status);
+		if (ms()->exit == 139)
+			ft_putstr_fd("Segmentation fault (core dumped)\n", 1);
+	}
+}
+
+pid_t	exe_pipe(t_cmd *cm)
 {
 	pid_t	pid;
 
 	signal_ignore();
 	pid = fork();
- 	if (pid == -1)
+	if (pid == -1)
 		ex_error("Fork", FORK, EXIT_FAILURE);
 	if (pid == 0)
 	{
 		signal_child();
-		if(ms()->in_fd == -1)
-			exit(ms()->exit);
 		check_infile(cm);
-		dup2(ms()->in_fd,STDIN_FILENO);
-		dup2(ms()->fd[1],STDOUT_FILENO);
+		dup2(ms()->in_fd, STDIN_FILENO);
+		dup2(ms()->fd[1], STDOUT_FILENO);
 		close(ms()->fd[0]);
 		close(ms()->fd[1]);
 		real_execute(cm);
 	}
-
-	return(pid);
+	return (pid);
 }
-pid_t exe_pipe2(t_cmd *cm)
+
+pid_t	exe_pipe2(t_cmd *cm)
 {
 	pid_t	pid;
-	int status;
-	int	i;
-	int	ofd;
 
 	signal_ignore();
 	pid = fork();
- 	if (pid == -1)
+	if (pid == -1)
 		ex_error("Fork", FORK, EXIT_FAILURE);
 	if (pid == 0)
 	{
 		signal_child();
-		i = 0;
-		ofd = 0;
-		while(i < cm->ofnum - 1)
-		{
-			ofd =open(cm->outfile[i++], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if(ofd == -1)
-			{
-				close_inout();
-				set_error(cm->outfile[--i]);
-				exit(1);
-			}
-			close(ofd);
-		}
-		if (cm->intype == TK_HDOC)
-			cm->ifnum++;
 		check_infile(cm);
-		if(ms()->in_fd == -1)
-			exit(ms()->exit);
-		if(dup2(ms()->out_fd,STDOUT_FILENO) == -1 || dup2(ms()->in_fd,STDIN_FILENO) == -1)
+		if (dup2(ms()->out_fd, STDOUT_FILENO) == -1
+			|| dup2(ms()->in_fd, STDIN_FILENO) == -1)
 		{
 			close_inout();
 			exit(1);
@@ -65,46 +69,23 @@ pid_t exe_pipe2(t_cmd *cm)
 		close_inout();
 		real_execute(cm);
 	}
-	waitpid(pid,&status,0);
-	ms()->exit = WEXITSTATUS(status);
-
-// printf ("In exe_pipe2:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-// print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-// print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-
-	return(pid);
+	get_status(pid);
+	return (pid);
 }
 
-pid_t exe_pipe3(t_cmd *cm)
+pid_t	exe_pipe3(t_cmd *cm)
 {
 	pid_t	pid;
-	int		i;
-	int status;
-	int ofd;
+
 	signal_ignore();
 	pid = fork();
- 	if (pid == -1)
+	if (pid == -1)
 		ex_error("Fork", FORK, EXIT_FAILURE);
 	if (pid == 0)
 	{
 		signal_child();
-
-		i = 0;
-			ofd = 0;
-		while(i < cm->ofnum - 1)
-		{
-			ofd =open(cm->outfile[i++], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if(ofd == -1)
-			{
-				close_inout();
-				set_error(cm->outfile[--i]);
-				exit(1);
-			}
-			close(ofd);
-		}
-		dup2(ms()->fd[0],STDIN_FILENO);
-		dup2(ms()->out_fd,STDOUT_FILENO);
-		if(dup2(ms()->out_fd,STDOUT_FILENO) == -1)
+		dup2(ms()->fd[0], STDIN_FILENO);
+		if (dup2(ms()->out_fd, STDOUT_FILENO) == -1)
 		{
 			close(ms()->fd[1]);
 			close(ms()->fd[0]);
@@ -114,8 +95,6 @@ pid_t exe_pipe3(t_cmd *cm)
 		close(ms()->fd[0]);
 		real_execute(cm);
 	}
-	waitpid(pid,&status,0);
-	ms()->exit = WEXITSTATUS(status);
-	return(pid);
-
+	get_status(pid);
+	return (pid);
 }

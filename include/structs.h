@@ -6,7 +6,7 @@
 /*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:57:07 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/23 14:35:10 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:31:17 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ typedef struct s_token
 */
 typedef struct s_ms
 {
+	int				heredoc_count;
+	int				limiter_count;
 	int				in_fd;
 	int				out_fd;
 	int				fd[2];
@@ -123,6 +125,8 @@ typedef struct s_ms
 	struct s_list	*env_list;
 	struct s_list	*local_var;
 	struct s_cmd	*cmds;
+	char			**file_error;
+	int				err;
 }	t_ms;
 
 /*
@@ -163,8 +167,6 @@ typedef struct s_ms
 	ct_out:	the index of outfile dyadic array;
 	ct_del:	the index of limiter dyadic array;
 	ct_w:	the index of cmd dyadic array;
-	in_out_list:	to store all the <, >, and << , and their files in the order
-					they appear.
 */
 typedef struct s_cmd
 {
@@ -184,7 +186,8 @@ typedef struct s_cmd
 	int				ct_out;
 	int				ct_del;
 	int				ct_w;
-	struct s_list	*iolist;
+	int				prev_fd;
+	struct s_list    *iolist;
 	struct s_cmd	*next;
 }	t_cmd;
 

@@ -12,7 +12,7 @@ char	*prompt()
 	char	*str;
 	char	*str2;
 
-	str = ft_strjoin(GREEN"minishell:"RESET_C , ms()->cwd);// delete the color settings/////////////
+	str = ft_strjoin(GREEN"minishell:"RESET_C , ms()->cwd);// delete the color settings
 	if (!str)
 		return(NULL);
 	str2 = ft_strjoin(str,"$ ");
@@ -23,32 +23,6 @@ char	*prompt()
 	}
 	free(str);
 	return(str2);
-}
-
-void	buildshell()
-{
-	while (1)
-	{
-
-		ms()->prompt = prompt();
-		ms()->input = readline(ms()->prompt);
-		ms()->lines++;
-		if(!ms()->input)
-		{
-			ft_printf("exit\n");
-			restart(1);
-		}
-		add_history(ms()->input);
-		if (ms()->input)
-		{
-			if (pre_handle())
-				exe(ms()->cmds);
-		}
-	// printf ("In buildshell:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	// print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	// print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-		restart(0);
-	}
 }
 
 char	*findpath(char **env)
@@ -62,6 +36,27 @@ char	*findpath(char **env)
 	return (env[i]);
 
 }
+void	buildshell()
+{
+	while (1)
+	{
+		ms()->path = findpath(ms()->env);
+		ms()->prompt = prompt();
+		ms()->input = readline(ms()->prompt);
+		ms()->lines++;
+		if(!ms()->input)
+		{
+			ft_printf("exit\n");
+			restart(1);
+		}
+		add_history(ms()->input);
+		if(ft_strlen(ms()->input)>0)
+			if (pre_handle())
+				exe(ms()->cmds);
+		restart(0);
+	}
+}
+
 
 t_list *get_env_list(char **envs)
 {
@@ -87,10 +82,7 @@ static void initenv(char **env)
 		i++;
 	ms()->env = malloc((i + 1) * sizeof(char *));
 	if (ms()->env == NULL)
-	{
-		perror("Failed to allocate memory for ms()->env");
 		exit(1);
-	}
 	i = 0;
 	while(env[i])
 	{
@@ -99,7 +91,6 @@ static void initenv(char **env)
 		{
 			while(i)
 				free(ms()->env[i--]);
-			perror("Failed to duplicate string");
 			exit(1);
 		}
 		i++;
@@ -116,9 +107,9 @@ static void init_ms(char **env)
 	ms()->out_fd = STDOUT_FILENO;
 	ms()->hfd = -1;
 	ms()->cwd = getcwd(NULL, 2048);
-	ms()->path = findpath(env);
 	ms()->env_list = get_env_list(env);
 	initenv(env);
+	ms()->lines= 0;
 	ms()->fd[0] = -1;
 	ms()->fd[1] = -1;
 	if(!(ms()->cwd))
@@ -139,6 +130,6 @@ int main(int  ac, char **av, char **env)
 	init_ms(env);
 	signal_default();
 	buildshell();
-	return (0);
+	return (ms()->exit);
 }
 

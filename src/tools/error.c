@@ -6,7 +6,7 @@
 /*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:02:58 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/23 13:28:00 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/10/28 19:15:24 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	open_error(char *message)
 {
 	if (!access(message, F_OK))
-		ex_error(message, PREMISSON, 126);
+		exit(126);
 	else
-		ex_error(message,PREMISSON,1);
-	restart(0);
+		exit(1);
+
 }
 
 void	ex_error(char *message, t_err_type type, int err_status)

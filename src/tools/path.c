@@ -6,7 +6,7 @@
 /*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:22:31 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/04 13:49:00 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:40:05 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	ft_strcmp(char *s1, char *s2)
 {
+
 	while (*s1 && *s2)
 	{
+
 		if (*s1 != *s2)
 			return (*s1 - *s2);
 		s1++;
@@ -68,6 +70,8 @@ char	*findvalidcmd(char **shellcmd)
 
 	if (ft_strchr(shellcmd[0], '/'))
 		return (pathincmd(shellcmd));
+	if(!ms()->path)
+		ex_error(shellcmd[0],NFILE,127);
 	filename = ft_split(ms()->path + 5, ':');
 	if (!filename)
 		return (NULL);

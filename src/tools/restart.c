@@ -6,24 +6,22 @@
 /*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:08:50 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/23 12:06:49 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/10/29 16:34:17 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "./minishell.h"
-void free_list(t_list *head)
-{
-	t_list *temp;
 
-	while (head != NULL)
-	{
-		temp = head;
-		head = head->next;
-		free(temp->content);
-		free(temp);
-	}
+static void	print_sig_info(void)
+{
+	if (ms()->exit == 131)
+		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+	else if (ms()->exit == 139)
+		ft_putstr_fd("Segmentation fault (core dumped)\n", STDERR_FILENO);
+	else if (ms()->exit == 130)
+		ft_putstr_fd("\n", STDERR_FILENO);
 }
+
 void restart(int ex)
 {
 	if (ms()->prompt)
@@ -36,25 +34,22 @@ void restart(int ex)
 	ms()->out_fd = STDOUT_FILENO;
 	free_token_list();
 	free_cmd_list();
-	// printf ("In restart:\n");// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	// print_env("PWD", 3); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	// print_env("OLDPWD", 6); // for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-
+	print_sig_info();
 	if(ex)
 	{
 		free(ms()->cwd);
 		pp_free(ms()->env);
 		free_local_var_list();
-//		printf("inside_exit, exit_code=%d\n", ms()->exit);//for testing!!!!!
+		ft_lstclear(&(ms()->env_list), (void(*)(void *))free_env);
 		exit(ms()->exit);
 	}
 }
 
 void	close_inout()
 {
-	if (ms()->in_fd != 0)
+	if (ms()->in_fd != 0 && ms()->in_fd != -1)
 		close(ms()->in_fd);
-	if (ms()->out_fd != 1)
+	if (ms()->out_fd != 1  && ms()->out_fd != -1)
 		close(ms()->out_fd);
 }
 
