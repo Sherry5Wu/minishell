@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:24:17 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/24 08:55:07 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/10/30 14:16:10 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	action(t_token *token, t_cmd **cmd, t_list *tmp, int end)
 	if (is_dir(token))
 		process_re(cmd, tmp);
 	else if (token->tk_type >= 6 && token->tk_type <= 10)
-//		(*cmd)->cmd[(*cmd)->ct_w++] = ft_strdup(token->str);
-		(*cmd)->cmd[(*cmd)->ct_w++] = token->str;
+		(*cmd)->cmd[(*cmd)->ct_w++] = ft_strdup(token->str);
+//		(*cmd)->cmd[(*cmd)->ct_w++] = token->str;
 	if (token->idx == end && token->tk_type == TK_PIPE
 		&& (*cmd)->outype == TK_NONE)
 		(*cmd)->outype = TK_PIPE;
@@ -95,6 +95,8 @@ static t_cmd	*new_cmd(int start, int end)
 
 	tmp = ms()->tokens;
 	cmd_nd = ft_calloc(1, sizeof(t_cmd));
+	if (!cmd_nd)
+		return (NULL);
 	count(&cmd_nd, tmp, start, end);
 	if (!allocate_mem(&cmd_nd))
 		return (NULL);

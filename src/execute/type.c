@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:53:18 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/29 17:35:38 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/10/30 12:46:01 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	getdoc(char *av, int hfd)
 	ms()->heredoc_count = 0;
 	while (1)
 	{
+		signal_ignore();
+		signal_heredoc();
 		doc_in = get_next_line(0);
 		if (!doc_in)
 		{
@@ -84,6 +86,7 @@ void	getdoc(char *av, int hfd)
 void	type_hdoc(t_cmd *cm)
 {
 	ms()->limiter_count = 0;
+	signal_ignore();
 	signal_heredoc();
 	while (cm->herenum--)
 	{
@@ -99,6 +102,7 @@ void	type_hdoc(t_cmd *cm)
 		cm->inf = "here_doc";
 		set_fd(cm);
 	}
+	signal_ignore();
 	signal_default();
 }
 

@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:48:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/24 09:47:43 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/10/30 15:00:21 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,9 @@ bool	pre_handle(void)
 		return (false);
 	del_empty_node_extra_pipe(&ms()->tokens);
 	assign_token_index();
-	if (!parsing())
-		return (false);
-	recorrect_cmd_intype(ms()->cmds);
+	// if (!parsing())
+	// 	return (false);
+//	recorrect_cmd_intype(ms()->cmds);
+//print_cmd();
 	return (true);
 }

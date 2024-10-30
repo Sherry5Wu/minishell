@@ -51,8 +51,9 @@ void	buildshell()
 		}
 		add_history(ms()->input);
 		if(ft_strlen(ms()->input)>0)
-			if (pre_handle())
-				exe(ms()->cmds);
+			pre_handle();
+			// if (pre_handle())
+			// 	exe(ms()->cmds);
 		restart(0);
 	}
 }

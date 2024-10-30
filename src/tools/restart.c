@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   restart.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:08:50 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/29 16:34:17 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/10/30 14:43:44 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void restart(int ex)
 	ms()->in_fd = STDIN_FILENO;
 	ms()->out_fd = STDOUT_FILENO;
 	free_token_list();
+//	ft_lstclear(&ms()->tokens, (void (*)(void *))token_delete);
 	free_cmd_list();
 	print_sig_info();
 	if(ex)
