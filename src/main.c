@@ -53,10 +53,10 @@ void	buildshell()
 		if(ft_strlen(ms()->input)>0)
 			if (pre_handle())
 				exe(ms()->cmds);
+			// pre_handle();
 		restart(0);
 	}
 }
-
 
 t_list *get_env_list(char **envs)
 {

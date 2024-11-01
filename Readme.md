@@ -506,4 +506,18 @@ WEXITSTATUS(status): Get the exit status number if it is a normal
 	- The number 128 is a base value that serves to shift the range of exit statuses for signal-induced terminations.
 
 
+# Debug
 
+1. -fsanitize
+```c
+fsanitize is a compiler flag used in GCC and Clang that enables runtime error detection through "sanitizers." Sanitizers help identify various types of bugs, such as memory errors, undefined behavior, and data races, making it easier to debug and improve the stability of your code. Here are some common options:
+
+Address Sanitizer (-fsanitize=address): Detects memory errors, such as buffer overflows, use-after-free, and memory leaks.
+
+Undefined Behavior Sanitizer (-fsanitize=undefined): Catches undefined behavior, such as integer overflows, invalid shifts, and null pointer dereferencing.
+
+Thread Sanitizer (-fsanitize=thread): Identifies data races in multi-threaded programs.
+Memory Sanitizer (-fsanitize=memory): Detects uninitialized reads in memory, helping to prevent errors from uninitialized values.
+```
+2. valgrind --trace-children=yes --track-fds=yes   --? checking if all children thread
+    and fd are all closed.

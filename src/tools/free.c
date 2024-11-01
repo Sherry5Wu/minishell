@@ -78,9 +78,8 @@ void	free_cmd_list(void)
 		pp_free(ms()->cmds->outfile);
 		ft_free_str(ms()->cmds->of);
 		ft_free_str(ms()->cmds->inf);
-		free(ms()->cmds);
 		free_iolist(ms()->cmds->iolist);
-
+		free(ms()->cmds);
 		ms()->cmds = next_cmd;
 	}
 	ms()->cmds = NULL;
