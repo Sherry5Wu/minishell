@@ -21,47 +21,48 @@ void	pp_free(char **fly)
 	fly = NULL;
 }
 
-void	free_token_list(void)
-{
-	t_list	*temp;
-	t_list	*next_node;
-	t_token	*token;
+// void	free_token_list(void)
+// {
+// 	t_list	*temp;
+// 	t_list	*next_node;
+// 	t_token	*token;
 
-	if (ms()->tokens == NULL)
-		return ;
-	temp = ms()->tokens;
-	while (temp)
-	{
-		token = temp->content;
-		next_node = temp->next;
-		ft_free_str(token->arg);
-		ft_free_str(token->str);
-		free(temp);
-		temp = next_node;
-	}
-	ms()->tokens = NULL;
-}
-static void	free_iolist(t_list *list)
-{
-	t_list	*temp;
-	t_list	*next_node;
-	t_env	*var;
+// 	if (ms()->tokens == NULL)
+// 		return ;
+// 	temp = ms()->tokens;
+// 	while (temp)
+// 	{
+// 		token = temp->content;
+// 		next_node = temp->next;
+// 		ft_free_str(token->arg);
+// 		ft_free_str(token->str);
+// 		ft_free_str(token);
+// 		ft_free_str(temp);
+// 		temp = next_node;
+// 	}
+// 	ms()->tokens = NULL;
+// }
+// static void	free_iolist(t_list *list)
+// {\\
+// 	t_list	*temp;
+// 	t_list	*next_node;
+// 	t_env	*var;
 
-	if (list == NULL)
-		return ;
-	temp = list;
-	while (temp)
-	{
+// 	if (list == NULL)
+// 		return ;
+// 	temp = list;
+// 	while (temp)
+// 	{
 
-		next_node = temp->next;
-		var = (t_env *)temp->content;
-		if (var) // 检查 var 是否为空
-			free(var); // 释放 var 本身
-		free(temp); // 释放当前节点
-		temp = next_node;
-	}
-	list = NULL;
-}
+// 		next_node = temp->next;
+// 		var = (t_env *)temp->content;
+// 		if (var) // 检查 var 是否为空
+// 			free(var); // 释放 var 本身
+// 		free(temp); // 释放当前节点
+// 		temp = next_node;
+// 	}
+// 	list = NULL;
+// }
 
 void	free_cmd_list(void)
 {
@@ -78,7 +79,8 @@ void	free_cmd_list(void)
 		pp_free(ms()->cmds->outfile);
 		ft_free_str(ms()->cmds->of);
 		ft_free_str(ms()->cmds->inf);
-		free_iolist(ms()->cmds->iolist);
+//		free_iolist(ms()->cmds->iolist);
+		ft_lstclear((&(ms()->cmds->iolist)), (void (*)(void *))free_env);
 		free(ms()->cmds);
 		ms()->cmds = next_cmd;
 	}
@@ -104,4 +106,11 @@ void	free_local_var_list(void)
 		temp = next_node;
 	}
 	ms()->local_var = NULL;
+}
+void	free_env(t_env *env)
+{
+	ft_free_str(env->name);
+	ft_free_str(env->value);
+	ft_free_str(env);
+	env = NULL;
 }

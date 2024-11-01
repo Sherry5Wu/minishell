@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:28:56 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/09 14:54:45 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/01 09:33:29 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	delete_token(t_token *token)
 	token->tk_type = -1;
 	token->idx = -1;
 	token->merge = 0;
+	ft_free_str(token);
 	token = NULL;
 }
 

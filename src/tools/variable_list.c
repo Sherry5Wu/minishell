@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 07:56:08 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/28 13:34:12 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/01 14:07:00 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ void	add_node_to_list(t_list **list, char *str)
 	env = find_variable(*list, name);
 	if (env)
 	{
-		free(name);
-		free(env->value);
+		ft_free_str(name);
+		ft_free_str(env->value);
 		env->value = value;
 	}
 	else

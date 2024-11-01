@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:08:50 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/31 14:54:15 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/01 13:14:59 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void restart(int ex)
 	ms()->fd[1] = -1;
 	ms()->in_fd = STDIN_FILENO;
 	ms()->out_fd = STDOUT_FILENO;
-	free_token_list();
+//	free_token_list();
+	ft_lstclear((&ms()->tokens), (void (*)(void *))delete_token);
 	free_cmd_list();
 	print_sig_info();
 	if(ex)
@@ -52,6 +53,7 @@ void restart(int ex)
 		free(ms()->cwd);
 		pp_free(ms()->env);
 		free_local_var_list();
+		ft_lstclear((&ms()->env_list), (void (*)(void *))free_env);
 		exit(ms()->exit);
 	}
 }

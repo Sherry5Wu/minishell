@@ -6,12 +6,12 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:48:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/01 08:44:59 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/01 14:30:04 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+#if 1
 static void	merge(t_list *list)
 {
 	t_token	*cur;
@@ -86,6 +86,7 @@ static void	assign_token_index(void)
 	}
 }
 
+
 /*
 	@function
 	Change the environment variable's type to TK_ENV_V, and local variable's
@@ -112,6 +113,7 @@ static void	add_variable_type(t_list *list)
 		list = list->next;
 	}
 }
+#endif
 
 bool	pre_handle(void)
 {
@@ -125,7 +127,6 @@ bool	pre_handle(void)
 	// print_list(ms()->tokens, 1);
 	// printf("<---------------------->\n");
 	restruct_token();
-//	print_list(ms()->tokens, 1);
 	expander();
 	add_variable_type(ms()->tokens);
 	if (are_all_def_loc_var() == true)
@@ -135,5 +136,7 @@ bool	pre_handle(void)
 	if (!parsing())
 		return (false);
 	recorrect_cmd_intype(ms()->cmds);
+	// printf("<----------after parsing------------>\n");
+	// print_cmd();//for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	return (true);
 }

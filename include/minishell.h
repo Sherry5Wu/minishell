@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 11:00:09 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/29 17:23:30 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/01 09:19:45 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,8 @@ void	ft_free_str(void *pointer);
 void	free_token_list(void);
 void	free_cmd_list(void);
 void	free_local_var_list(void);
-
-void    free_token(t_token *token);
+void	free_env(t_env *env);
+// void    free_token(t_token *token);
 
 
 
@@ -187,4 +187,5 @@ void    free_token(t_token *token);
 # define RESET_C		"\033[0m"
 void	print_list(t_list *list, int flag); // for testing!!!!!!!!!!!11
 void	print_cmd(void);// for testing!!!!!!!!!!!11
+
 # endif

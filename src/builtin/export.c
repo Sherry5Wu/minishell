@@ -130,7 +130,7 @@ char	*lastequal(char	*str)
 	if (last_equal != NULL)
 	{
 		length = last_equal - str;
-		result = malloc(length + 1);
+		result = malloc(sizeof(char) * (length + 1));
 		if (result == NULL)
 		{
 			perror("Failed to allocate memory");
@@ -161,6 +161,7 @@ int	ft_export(char	**cmd)
 {
 	int	i;
 	int	status;
+	char	*result;
 
 	i = 1;
 	status = 1;
@@ -172,10 +173,12 @@ int	ft_export(char	**cmd)
 		{
 			if (ft_strchr(cmd[i], '='))
 			{
-				if (!ft_valid_character(lastequal(cmd[i])))
+				result = lastequal(cmd[i]);// add for free the memory that created in lastequal().
+				if (!ft_valid_character(result))
 					status = export_err(cmd[i]);
 				else
 					update_or_add(cmd[i]);
+				ft_free_str(result);// add for free the memory that created in lastequal().
 			}
 			else if (!ft_valid_character(cmd[i]))
 				status = export_err(cmd[i]);
