@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:48:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/31 15:03:20 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/01 07:41:53 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void	restruct_token(void)
 			if (!(tmp->next)->next)
 			{
 				tmp->next = NULL;
+				del_node(delete);
 				break ;
 			}
 			tmp->next = (tmp->next)->next;
