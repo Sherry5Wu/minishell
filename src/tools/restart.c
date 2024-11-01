@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:08:50 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/30 14:43:44 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/10/31 14:54:15 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ static void	print_sig_info(void)
 		ft_putstr_fd("\n", STDERR_FILENO);
 }
 
+void free_list(t_list *head)
+{
+	t_list *temp;
+
+	while (head != NULL)
+	{
+		temp = head;
+		head = head->next;
+		free(temp->content);
+		free(temp);
+	}
+}
 void restart(int ex)
 {
 	if (ms()->prompt)
@@ -33,7 +45,6 @@ void restart(int ex)
 	ms()->in_fd = STDIN_FILENO;
 	ms()->out_fd = STDOUT_FILENO;
 	free_token_list();
-//	ft_lstclear(&ms()->tokens, (void (*)(void *))token_delete);
 	free_cmd_list();
 	print_sig_info();
 	if(ex)
@@ -41,13 +52,13 @@ void restart(int ex)
 		free(ms()->cwd);
 		pp_free(ms()->env);
 		free_local_var_list();
-		ft_lstclear(&(ms()->env_list), (void(*)(void *))free_env);
 		exit(ms()->exit);
 	}
 }
 
 void	close_inout()
 {
+
 	if (ms()->in_fd != 0 && ms()->in_fd != -1)
 		close(ms()->in_fd);
 	if (ms()->out_fd != 1  && ms()->out_fd != -1)

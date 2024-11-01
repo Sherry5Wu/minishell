@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 08:21:42 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/30 14:16:26 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/10/24 09:17:23 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ bool	allocate_mem(t_cmd **cmd)
 		if (!(*cmd)->cmd)
 			return (false);
 	}
-	if ((*cmd)->herenum > 0)
+	if ((*cmd)->herenum)
 	{
 		(*cmd)->limiter = ft_calloc(((*cmd)->herenum + 1), sizeof(char *));
 		if (!(*cmd)->limiter)

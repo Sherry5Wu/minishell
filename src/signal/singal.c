@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   singal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:14:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/30 12:40:38 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/10/29 17:00:04 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	signal_heredoc(void)
 {
 	signal(SIGINT, handle_heredoc);
 	signal(SIGQUIT, SIG_IGN);
+
 }
 
 void	signal_child(void)

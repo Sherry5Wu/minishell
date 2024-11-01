@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:48:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/30 15:00:21 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/10/31 15:03:20 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,16 +121,18 @@ bool	pre_handle(void)
 	if (!check_syntax())
 		return (false);
 	merge(ms()->tokens);
+	// print_list(ms()->tokens, 1);
+	// printf("<---------------------->\n");
 	restruct_token();
+//	print_list(ms()->tokens, 1);
 	expander();
 	add_variable_type(ms()->tokens);
 	if (are_all_def_loc_var() == true)
 		return (false);
 	del_empty_node_extra_pipe(&ms()->tokens);
 	assign_token_index();
-	// if (!parsing())
-	// 	return (false);
-//	recorrect_cmd_intype(ms()->cmds);
-//print_cmd();
+	if (!parsing())
+		return (false);
+	recorrect_cmd_intype(ms()->cmds);
 	return (true);
 }

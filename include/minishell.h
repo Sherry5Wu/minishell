@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 11:00:09 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/30 14:56:58 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/10/29 17:23:30 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,9 +177,8 @@ void	ft_free_str(void *pointer);
 void	free_token_list(void);
 void	free_cmd_list(void);
 void	free_local_var_list(void);
-void	free_env(t_env *env);
-void	token_delete(t_token *token);
 
+void    free_token(t_token *token);
 
 
 

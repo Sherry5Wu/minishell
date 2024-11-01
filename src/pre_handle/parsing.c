@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:24:17 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/30 14:16:10 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/10/24 08:55:07 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,70 +22,10 @@ static void	action(t_token *token, t_cmd **cmd, t_list *tmp, int end)
 		process_re(cmd, tmp);
 	else if (token->tk_type >= 6 && token->tk_type <= 10)
 		(*cmd)->cmd[(*cmd)->ct_w++] = ft_strdup(token->str);
-//		(*cmd)->cmd[(*cmd)->ct_w++] = token->str;
 	if (token->idx == end && token->tk_type == TK_PIPE
 		&& (*cmd)->outype == TK_NONE)
 		(*cmd)->outype = TK_PIPE;
 }
-
-#if 0
-static void	print_a_cmd(t_cmd *cmd)//for testing!!!!!!!!!!!!!!!!!!!!!!???????????????????
-{
-	int	j=0;
-	printf("The cmd info as below:\n");
-	printf("ofnum=%d  ifnum=%d  herenum=%d  word=%d\n", cmd->ofnum, cmd->ifnum, cmd->herenum, cmd->word);
-	printf("ct_del=%d  cd_in=%d  ct_out=%d  ct_word=%d\n", cmd->ct_del, cmd->ct_in, cmd->ct_out, cmd->ct_w);
-	printf("\nlast_infile=%s\nlast_outfie=%s", cmd->inf, cmd->of);
-	printf("\nintype=%d\nouttype=%d\n\n", cmd->intype, cmd->outype);
-	if (cmd->word != 0)
-	{
-		printf("\ncmd strs are below:\n");
-		while(j < cmd->word)
-		{
-			printf("	cmd_str[%d]=%s\n", j, cmd->cmd[j]);
-			j++;
-		}
-	}
-	else
-		printf("There are no cmd_strs\n");
-	j = 0;
-	if (cmd->ifnum != 0)
-	{
-		printf("\ninfile strs are below:\n");
-		while(j < cmd->ifnum)
-		{
-			printf("	infile[%d]=%s\n", j, cmd->infile[j]);
-			j++;
-		}
-	}
-	else
-		printf("There are no infiles\n");
-	j = 0;
-	if (cmd->ofnum != 0)
-	{
-		printf("\noutfile strs are below:\n");
-		while(j < cmd->ofnum)
-		{
-			printf("	outfile[%d]=%s\n", j, cmd->outfile[j]);
-			j++;
-		}
-	}
-	else
-		printf("There are no outfiles\n");
-	j = 0;
-	if (cmd->herenum)
-	{
-		printf("\nlimiter strs are below:\n");
-		while(j < cmd->herenum)
-		{
-			printf("	limiter[%d]=%s\n", j, cmd->limiter[j]);
-			j++;
-		}
-	}
-	else
-		printf("There are no delimiters\n");
-}
-#endif
 
 static t_cmd	*new_cmd(int start, int end)
 {
@@ -95,8 +35,6 @@ static t_cmd	*new_cmd(int start, int end)
 
 	tmp = ms()->tokens;
 	cmd_nd = ft_calloc(1, sizeof(t_cmd));
-	if (!cmd_nd)
-		return (NULL);
 	count(&cmd_nd, tmp, start, end);
 	if (!allocate_mem(&cmd_nd))
 		return (NULL);
@@ -114,8 +52,6 @@ static t_cmd	*new_cmd(int start, int end)
 		tmp = tmp->next;
 	}
 	cmd_nd->next = NULL;
-//	printf("\nafter assign values\n");// for testing!!!!!!!!!!!!!!!!!!!
-//	print_a_cmd(cmd_nd);// for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	return (cmd_nd);
 }
 

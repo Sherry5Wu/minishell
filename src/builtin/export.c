@@ -53,6 +53,12 @@ bool	ft_valid_character(char *str)
 	return (true);
 }
 
+// void	update_env(int	i, char	*str)
+// {
+// 	free(ms()->env[i]);
+// 	ms()->env[i] = ft_strdup(str);
+// }
+
 int	count_array_size(char **str)
 {
 	int	i;

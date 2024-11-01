@@ -4,7 +4,7 @@ GREEN := \033[1;92m
 DEFAULT := \033[0;39m
 
 CC := cc
-# -fsanitize=address
+
 CFLAGS := -Wall -Wextra -Werror \
 	-I ./include -I ./libft/libft -I ./libft/printf -I ./libft/get_next_line
 
