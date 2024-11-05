@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:53:18 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 14:54:02 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/05 15:03:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,10 @@ pid_t	type_hdoc(t_cmd *cm)
 		cm->inf = "here_doc";
 		set_fd(cm);
 	}
-	 signal_default();
+	signal_default();
+	exit(0);
 	}
+
 	return (pid);
 
 }

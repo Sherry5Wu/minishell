@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 10:18:58 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/05 14:43:17 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/05 15:01:01 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ void	handle_heredoc(int signal)
 	{
 		printf("\n");
 		restart(1);
-		(ms()->exit) = 130;
+		(ms()->exit) = 130; 
 	}
 }
