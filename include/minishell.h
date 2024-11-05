@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 11:00:09 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 12:26:18 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/05 14:54:47 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int		ft_strcmp(char *s1, char *s2);
 pid_t	exe_pipe(t_cmd *cm);
 pid_t	exe_pipe2(t_cmd *cm);
 pid_t	exe_pipe3(t_cmd *cm);
-void	type_hdoc(t_cmd *cm);
+pid_t	type_hdoc(t_cmd *cm);
 pid_t	type_outpipe(t_cmd *cm, int	*prev_fd);
 /*<-----exe----->*/
 char	*findvalidcmd(char **shellcmd);

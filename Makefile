@@ -4,12 +4,12 @@ GREEN := \033[1;92m
 DEFAULT := \033[0;39m
 
 CC := cc
-#-g -fsanitize=address for debugging
-# CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address \
-# 	-I ./include -I ./libft/libft -I ./libft/printf -I ./libft/get_next_line
-
-CFLAGS := -Wall -Wextra -Werror \
+# -g -fsanitize=address for debugging
+CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address \
 	-I ./include -I ./libft/libft -I ./libft/printf -I ./libft/get_next_line
+
+# CFLAGS := -Wall -Wextra -Werror \
+# 	-I ./include -I ./libft/libft -I ./libft/printf -I ./libft/get_next_line
 
 
 LIBFT := ./libft/libft

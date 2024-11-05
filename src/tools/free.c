@@ -44,8 +44,10 @@ void	free_cmd_list(void)
 		pp_free(ms()->cmds->infile);
 		pp_free(ms()->cmds->limiter);
 		pp_free(ms()->cmds->outfile);
-		free(ms()->cmds->of);
-		free(ms()->cmds->inf);
+		if(ms()->cmds->ofnum)
+			free(ms()->cmds->of);
+		if(ms()->cmds->ifnum)
+			free(ms()->cmds->inf);
 		ft_lstclear((&(ms()->cmds->iolist)), (void (*)(void *))free_env2);
 		free(ms()->cmds);
 		ms()->cmds = next_cmd;

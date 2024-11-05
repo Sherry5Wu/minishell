@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:53:13 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 12:05:46 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/05 14:53:20 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ pid_t	exe_heart(int i, t_cmd *cm, int *prev_fd)
 	if (i)
 	{
 		if (cm->herenum > 0)
-			type_hdoc(cm);
+			pipeid = type_hdoc(cm);
 		if (cm->outype == TK_PIPE)
 			pipeid = type_outpipe(cm, prev_fd);
 		else if ((cm->intype == TK_IN_RE || cm->intype == TK_NONE)
@@ -113,6 +113,8 @@ void	exe(t_cmd *cm)
 	while (cm)
 	{
 		i = set_fd(cm);
+		if(!cm->cmd)
+			break ;
 		if (b == 1 && cm->outype == TK_NONE)
 			if (ft_strncmp(cm->cmd[0], "echo", 4)
 				&& ft_strncmp(cm->cmd[0], "pwd", 3) && builtin(cm->cmd))
