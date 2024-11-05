@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 09:50:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/05 08:16:28 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/05 13:55:29 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*
 	Token_type =2 is TK_IN_RE.
 */
+
 static void	handle_in_re(t_cmd **cmd, t_list *tk_node)
 {
 	t_env	*redir;
@@ -30,6 +31,7 @@ static void	handle_in_re(t_cmd **cmd, t_list *tk_node)
 	redir = new_variable(token_type, token->arg);
 	if (redir)
 		ft_lstadd_back(&((*cmd)->iolist), ft_lstnew(redir));
+
 }
 
 static void	handle_hdoc(t_cmd **cmd, t_list *tk_node)
@@ -58,7 +60,7 @@ static void	handle_out_re(t_cmd **cmd, t_list *tk_node)
 	else
 		token_type = ft_strdup("5");
 	redir = new_variable(token_type, token->arg);
-	if (!redir)
+	if (redir)
 		ft_lstadd_back(&((*cmd)->iolist), ft_lstnew(redir));
 }
 /*

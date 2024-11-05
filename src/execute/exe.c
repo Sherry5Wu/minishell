@@ -6,7 +6,7 @@
 /*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:53:13 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/29 17:36:25 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/05 12:05:46 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	builtin(char **cmd)
 		return (ft_echo(cmd));
 	else if (size == 3 && !ft_strncmp(cmd[0], "pwd", 3))
 	{
-		ft_printf("%s\n", getcwd(NULL, 2048));
+		ft_printf("%s\n", ms()->cwd);
 		return (1);
 	}
 	else if (size == 5 && !ft_strncmp(cmd[0], "unset", 5))

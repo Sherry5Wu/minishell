@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:08:50 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/01 13:14:59 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/05 13:25:34 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void free_list(t_list *head)
 }
 void restart(int ex)
 {
+
 	if (ms()->prompt)
 		free(ms()->prompt);
 	if(ms()->input)

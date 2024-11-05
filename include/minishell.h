@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 11:00:09 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/01 09:19:45 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/05 12:26:18 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char **sort_env();
 char	*get_env(char	*name);
 /*<------redirect------->*/
 int	set_errors(char *message);
-int	check_files(t_cmd *cm);
+int	check_files(t_list *cm);
 int		set_fd(t_cmd *cm);
 /*                                             pre_handle                                               */
 

@@ -6,7 +6,7 @@
 /*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:20:57 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/29 17:34:00 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/05 12:25:58 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,30 @@ int	set_errors(char *message)
 	return (0);
 }
 
-int	check_files(t_cmd *cm)
+int	check_files(t_list *cm)
 {
 	int	fd;
 
 	fd = 0;
-	if (ft_atoi(((t_env *)(cm->iolist)->content)->name) == 2)
+	if (ft_atoi(((t_env *)(cm)->content)->name) == 2)
 	{
-		fd = open(((t_env *)(cm->iolist)->content)->value, O_RDONLY, 0444);
+		fd = open(((t_env *)(cm)->content)->value, O_RDONLY, 0444);
 		if (fd == -1)
-			return (set_errors(((t_env *)(cm->iolist)->content)->value));
+			return (set_errors(((t_env *)(cm)->content)->value));
 	}
-	else if (ft_atoi(((t_env *)(cm->iolist)->content)->name) == 3)
+	else if (ft_atoi(((t_env *)(cm)->content)->name) == 3)
 	{
-		fd = open(((t_env *)(cm->iolist)->content)->value, O_WRONLY
+		fd = open(((t_env *)(cm)->content)->value, O_WRONLY
 				| O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
-			return (set_errors(((t_env *)(cm->iolist)->content)->value));
+			return (set_errors(((t_env *)(cm)->content)->value));
 	}
-	else if (ft_atoi(((t_env *)(cm->iolist)->content)->name) == 5)
+	else if (ft_atoi(((t_env *)(cm)->content)->name) == 5)
 	{
-		fd = open(((t_env *)(cm->iolist)->content)->value, O_WRONLY
+		fd = open(((t_env *)(cm)->content)->value, O_WRONLY
 				| O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
-			return (set_errors(((t_env *)(cm->iolist)->content)->value));
+			return (set_errors(((t_env *)(cm)->content)->value));
 	}
 	close(fd);
 	return (1);
@@ -67,11 +67,13 @@ int	set_fd_in(t_cmd *cm)
 {
 	if (ms()->in_fd == -1)
 		ms()->in_fd = STDIN_FILENO;
-	while (cm->iolist)
+	t_list *temp;
+	temp = cm->iolist;
+	while (temp)
 	{
-		if (!check_files(cm))
+		if (!check_files(temp))
 			break ;
-		cm->iolist = cm->iolist->next;
+		temp = temp->next;
 	}
 	if (cm->intype == TK_IN_RE)
 		(ms()->in_fd) = open(cm->inf, O_RDONLY, 0444);

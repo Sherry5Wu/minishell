@@ -6,12 +6,12 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:48:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/04 09:29:49 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/05 13:20:03 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#if 1
+#if 1 // for testing!!!!!!!!!!!!!!!!!!!
 static void	merge(t_list *list)
 {
 	t_token	*cur;
@@ -113,7 +113,7 @@ static void	add_variable_type(t_list *list)
 		list = list->next;
 	}
 }
-#endif
+#endif // for testing!!!!!!!!!!!!!!!!!!!
 
 bool	pre_handle(void)
 {
