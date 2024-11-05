@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:48:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/01 14:30:04 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/04 09:29:49 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,6 @@ bool	pre_handle(void)
 	if (!check_syntax())
 		return (false);
 	merge(ms()->tokens);
-	// print_list(ms()->tokens, 1);
-	// printf("<---------------------->\n");
 	restruct_token();
 	expander();
 	add_variable_type(ms()->tokens);

@@ -42,27 +42,30 @@ void	pp_free(char **fly)
 // 	}
 // 	ms()->tokens = NULL;
 // }
-// static void	free_iolist(t_list *list)
-// {\\
-// 	t_list	*temp;
-// 	t_list	*next_node;
-// 	t_env	*var;
 
-// 	if (list == NULL)
-// 		return ;
-// 	temp = list;
-// 	while (temp)
-// 	{
+static void	free_iolist(t_list *list)
+{
+	t_list	*temp;
+	t_list	*next_node;
+	t_env	*var;
 
-// 		next_node = temp->next;
-// 		var = (t_env *)temp->content;
-// 		if (var) // 检查 var 是否为空
-// 			free(var); // 释放 var 本身
-// 		free(temp); // 释放当前节点
-// 		temp = next_node;
-// 	}
-// 	list = NULL;
-// }
+	if (list == NULL)
+		return ;
+	temp = list;
+	while (temp)
+	{
+
+		next_node = temp->next;
+		var = (t_env *)temp->content;
+		// if (var) // 检查 var 是否为空
+		// 	free(var); // 释放 var 本身
+		ft_free_str(var->name);
+		ft_free_str(var);
+		free(temp); // 释放当前节点
+		temp = next_node;
+	}
+	list = NULL;
+}
 
 void	free_cmd_list(void)
 {
@@ -79,7 +82,7 @@ void	free_cmd_list(void)
 		pp_free(ms()->cmds->outfile);
 		ft_free_str(ms()->cmds->of);
 		ft_free_str(ms()->cmds->inf);
-//		free_iolist(ms()->cmds->iolist);
+		// free_iolist(ms()->cmds->iolist);
 		ft_lstclear((&(ms()->cmds->iolist)), (void (*)(void *))free_env);
 		free(ms()->cmds);
 		ms()->cmds = next_cmd;

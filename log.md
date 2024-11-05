@@ -15,6 +15,9 @@
 	--> minishell.h --> void	free_env(t_env *env)
 
 debugging: cat <"./test_files/infile"
+
+grep hi <./test_files/infile
+
 weird things: if don't add exe part, there is no leak; otherwise, there is leak
 			   but the leak shows in the pre_handle part.
 
@@ -25,5 +28,4 @@ weird things: if don't add exe part, there is no leak; otherwise, there is leak
 
 Memory leaks as below:
 
-85/146
 

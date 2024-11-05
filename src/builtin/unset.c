@@ -22,18 +22,18 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 	if (begin_list == NULL || *begin_list == NULL)
 		return;
 	cur = *begin_list;
-	len = ft_strlen(data_ref); // added by sherry 1.11
-		if (len == ft_strlen(((t_env *)cur->content)->name) && cmp(((t_env *)cur->content)->name, data_ref,len) == 0)// added by sherry 1.11
-		{
-			*begin_list = cur->next;
-			free(cur);
-			ft_list_remove_if(begin_list, data_ref, cmp);
-		}
-		else
-		{
-			cur = *begin_list;
-			ft_list_remove_if(&cur->next, data_ref, cmp);
-		}
+	len = ft_strlen(data_ref);
+	if (len == ft_strlen(((t_env *)cur->content)->name) && cmp(((t_env *)cur->content)->name, data_ref,len) == 0)// added by sherry 1.11
+	{
+		*begin_list = cur->next;
+		ft_lstdelone(cur, (void (*) (void *))free_env);
+		ft_list_remove_if(begin_list, data_ref, cmp);
+	}
+	else
+	{
+		cur = *begin_list;
+		ft_list_remove_if(&cur->next, data_ref, cmp);
+	}
 
 }
 static int	find_env(char	*name)
@@ -44,7 +44,7 @@ static int	find_env(char	*name)
 	while (ms()->env[i] && !ft_strnstr(ms()->env[i], name, ft_strlen(name)))
 			i++;
 	if(!ms()->env[i])
-		return(0);
+		return(-1);
 	return(i);
 }
 
@@ -52,7 +52,10 @@ static	void	remove_env(int	index)
 {
 	int	i;
 
+	if(index == -1)
+		return ;
 	i = index;
+	free(ms()->env[index]);
 	while(ms()->env[i])
 	{
 		ms()->env[i] = ms()->env[i + 1];
@@ -70,7 +73,6 @@ int	ft_unset(char **cmd)
 		ft_list_remove_if(&ms()->env_list, cmd[i], ft_strncmp);
 		remove_env(find_env(cmd[i]));
 	}
-
 	ms()->exit = 0;
 	return (1);
 }
