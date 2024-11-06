@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 11:48:24 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/29 11:48:25 by yzheng           ###   ########.fr       */
+/*   Created: 2024/11/05 20:12:44 by yzheng            #+#    #+#             */
+/*   Updated: 2024/11/05 20:13:09 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +21,8 @@ void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 		return ;
 	cur = *begin_list;
 	len = ft_strlen(data_ref);
-		// added by sherry 1.11
 	if (len == ft_strlen(((t_env *)cur->content)->name)
 		&& cmp(((t_env *)cur->content)->name, data_ref, len) == 0)
-		// added by sherry 1.11
 	{
 		*begin_list = cur->next;
 		ft_lstdelone(cur, (void (*)(void *))free_env);
@@ -37,6 +34,7 @@ void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 		ft_list_remove_if(&cur->next, data_ref, cmp);
 	}
 }
+
 static int	find_env(char *name)
 {
 	int	i;
@@ -64,6 +62,7 @@ static void	remove_env(int index)
 	}
 	ms()->env[i] = NULL;
 }
+
 int	ft_unset(char **cmd)
 {
 	int	i;

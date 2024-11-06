@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pre_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:48:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/05 14:06:00 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/05 20:56:27 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#if 1 // for testing!!!!!!!!!!!!!!!!!!!
+
 static void	merge(t_list *list)
 {
 	t_token	*cur;
@@ -86,12 +86,6 @@ static void	assign_token_index(void)
 	}
 }
 
-
-/*
-	@function
-	Change the environment variable's type to TK_ENV_V, and local variable's
-	type to TK_LOC_V. Before theirs types are TK_WORD.
-*/
 static void	add_variable_type(t_list *list)
 {
 	t_token	*token;
@@ -113,7 +107,6 @@ static void	add_variable_type(t_list *list)
 		list = list->next;
 	}
 }
-#endif // for testing!!!!!!!!!!!!!!!!!!!
 
 bool	pre_handle(void)
 {
@@ -134,7 +127,5 @@ bool	pre_handle(void)
 	if (!parsing())
 		return (false);
 	recorrect_cmd_intype(ms()->cmds);
-	// printf("<----------after parsing------------>\n");
-	// print_cmd();//for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	return (true);
 }

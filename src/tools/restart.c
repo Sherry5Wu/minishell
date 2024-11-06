@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:08:50 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 14:23:50 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/06 12:44:20 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static void	print_sig_info(void)
 		ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-void free_list(t_list *head)
+void	free_list(t_list *head)
 {
-	t_list *temp;
+	t_list	*temp;
 
 	while (head != NULL)
 	{
@@ -34,23 +34,24 @@ void free_list(t_list *head)
 		free(temp);
 	}
 }
-void restart(int ex)
-{
 
+void	restart(int ex)
+{
 	if (ms()->prompt)
 		free(ms()->prompt);
-	if(ms()->input)
+	if (ms()->input)
 		free(ms()->input);
 	ms()->fd[0] = -1;
 	ms()->fd[1] = -1;
 	ms()->in_fd = STDIN_FILENO;
 	ms()->out_fd = STDOUT_FILENO;
-//	free_token_list();
 	ft_lstclear((&ms()->tokens), (void (*)(void *))delete_token);
 	free_cmd_list();
-	print_sig_info();
-	if(ex)
+	if (!ex)
+		print_sig_info();
+	if (ex)
 	{
+	
 		free(ms()->cwd);
 		pp_free(ms()->env);
 		free_local_var_list();
@@ -59,16 +60,15 @@ void restart(int ex)
 	}
 }
 
-void	close_inout()
+void	close_inout(void)
 {
-
 	if (ms()->in_fd != 0 && ms()->in_fd != -1)
 		close(ms()->in_fd);
-	if (ms()->out_fd != 1  && ms()->out_fd != -1)
+	if (ms()->out_fd != 1 && ms()->out_fd != -1)
 		close(ms()->out_fd);
 }
 
-void	close_all(int	prev_fd)
+void	close_all(int prev_fd)
 {
 	unlink("here_doc");
 	if (prev_fd != -1)

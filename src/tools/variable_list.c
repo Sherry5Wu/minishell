@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 07:56:08 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/01 14:07:00 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/05 20:25:54 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 	The syntax of defining  enviroment varible: name=value
 	Rule:
 	1. there is no space between "name", "=" and "value", like
-	   name =123, name= 123 are all wrong;
+		name =123, name= 123 are all wrong;
 	2. the variable name only start with either letter or '_', and only
-	   contains letter, '_' and number.
-	   like 2name=123, *name=123, na$me=123 are all wrong;
+		contains letter, '_' and number.
+		like 2name=123, *name=123, na$me=123 are all wrong;
 
 	f_equal: when loop the str, if encounter a "=" then f_equal=true;
 	f_alp_uds: when loop the str, if encounter a alphabeta or "_", then
@@ -44,11 +44,9 @@ bool	is_defining_var(char *str)
 			f_equal = true;
 		else if (str[i] == '_' || ft_isalpha(str[i]))
 			f_alp_uds = true;
-		else if (!ft_isalpha(str[i]) && str[i] != '_'
-			&& !f_equal && !f_alp_uds)// the name start with non-alpha, non-'_', is illegal.
-				return (false);
-		else if (!ft_isalnum(str[i]) && str[i] != '_'
-			&& !f_equal)// there is illegal character in the name.
+		else if (!ft_isalpha(str[i]) && str[i] != '_' && !f_equal && !f_alp_uds)
+			return (false);
+		else if (!ft_isalnum(str[i]) && str[i] != '_' && !f_equal)
 			return (false);
 	}
 	if (f_equal == false)
@@ -68,13 +66,6 @@ t_env	*new_variable(char *name, char *value)
 	return (new);
 }
 
-/*
-	@Why "return(ft_strdup(""))"?
-	return(ft_strdup("")) and return (NULL) are both return a NULL, but using
-	former one, it will generate a memoery for it. In other function, we need
-	free the memory we allocate for env_value, so if we just return a NULL with
-	out allocating memory for it, it will generate an error.
-*/
 char	*get_variable_value(char *env_name)
 {
 	t_env	*env;
@@ -82,8 +73,7 @@ char	*get_variable_value(char *env_name)
 
 	if (env_name[0] == '$')
 		env_name++;
-	tmp = ms() ->env_list;
-
+	tmp = ms()->env_list;
 	while (tmp && env_name)
 	{
 		env = (t_env *)(tmp->content);
@@ -94,14 +84,6 @@ char	*get_variable_value(char *env_name)
 	return (ft_strdup(""));
 }
 
-/*
-	@function
-	The funtion will loop the env list to find if any env.name matching with passed name.
-
-	@return
-	return the env if found matched one;
-	return NULL, if did NOT find matched one;
-*/
 static t_env	*find_variable(t_list *list, char *name)
 {
 	t_env	*env;
@@ -129,7 +111,7 @@ void	add_node_to_list(t_list **list, char *str)
 	while (str[++i])
 	{
 		if (str[i] == '=')
-			break;
+			break ;
 	}
 	name = ft_substr(str, 0, i);
 	value = ft_strdup(str + i + 1);

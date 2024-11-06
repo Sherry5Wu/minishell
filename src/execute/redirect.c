@@ -6,7 +6,7 @@
 /*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:20:57 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 12:25:58 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/05 20:16:31 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ int	check_files(t_list *cm)
 	}
 	else if (ft_atoi(((t_env *)(cm)->content)->name) == 3)
 	{
-		fd = open(((t_env *)(cm)->content)->value, O_WRONLY
-				| O_CREAT | O_TRUNC, 0644);
+		fd = open(((t_env *)(cm)->content)->value, O_WRONLY | O_CREAT | O_TRUNC,
+				0644);
 		if (fd == -1)
 			return (set_errors(((t_env *)(cm)->content)->value));
 	}
 	else if (ft_atoi(((t_env *)(cm)->content)->name) == 5)
 	{
-		fd = open(((t_env *)(cm)->content)->value, O_WRONLY
-				| O_CREAT | O_APPEND, 0644);
+		fd = open(((t_env *)(cm)->content)->value,
+				O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
 			return (set_errors(((t_env *)(cm)->content)->value));
 	}
@@ -65,10 +65,11 @@ int	check_files(t_list *cm)
 
 int	set_fd_in(t_cmd *cm)
 {
+	t_list	*temp;
+
+	temp = cm->iolist;
 	if (ms()->in_fd == -1)
 		ms()->in_fd = STDIN_FILENO;
-	t_list *temp;
-	temp = cm->iolist;
 	while (temp)
 	{
 		if (!check_files(temp))

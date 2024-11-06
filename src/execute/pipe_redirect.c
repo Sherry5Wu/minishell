@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:54:18 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/29 17:37:32 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/06 13:17:06 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_status(pid_t	pid)
+void	get_status(pid_t pid)
 {
 	int	status;
 
@@ -60,8 +60,8 @@ pid_t	exe_pipe2(t_cmd *cm)
 	{
 		signal_child();
 		check_infile(cm);
-		if (dup2(ms()->out_fd, STDOUT_FILENO) == -1
-			|| dup2(ms()->in_fd, STDIN_FILENO) == -1)
+		if (dup2(ms()->out_fd, STDOUT_FILENO) == -1 || dup2(ms()->in_fd,
+				STDIN_FILENO) == -1)
 		{
 			close_inout();
 			exit(1);
@@ -70,6 +70,7 @@ pid_t	exe_pipe2(t_cmd *cm)
 		real_execute(cm);
 	}
 	get_status(pid);
+	
 	return (pid);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:51:58 by yzheng            #+#    #+#             */
-/*   Updated: 2024/10/29 17:04:32 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/05 20:24:04 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*ft_strndup(char *src, int size)
 	dest = malloc(sizeof(char) * (size + 1));
 	if (dest == NULL)
 		return (NULL);
-
 	while (i < size)
 	{
 		dest[i] = src[i];
@@ -44,4 +43,43 @@ char	*ft_strndup(char *src, int size)
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+pid_t	type_outpipe(t_cmd *cm, int *prev_fd)
+{
+	pid_t	pipeid;
+
+	if (pipe(ms()->fd) == -1)
+		ex_error("Pipe", PIPE, EXIT_FAILURE);
+	pipeid = exe_pipe(cm);
+	close(ms()->fd[1]);
+	if (*prev_fd != -1)
+		close(*prev_fd);
+	*prev_fd = ms()->fd[0];
+	return (pipeid);
+}
+
+t_ms	*ms(void)
+{
+	static t_ms	ms;
+
+	return (&ms);
+}
+
+char	*prompt(void)
+{
+	char	*str;
+	char	*str2;
+
+	str = ft_strjoin(GREEN "minishell:" RESET_C, ms()->cwd);
+	if (!str)
+		return (NULL);
+	str2 = ft_strjoin(str, "$ ");
+	if (!str2)
+	{
+		free(str);
+		return (NULL);
+	}
+	free(str);
+	return (str2);
 }

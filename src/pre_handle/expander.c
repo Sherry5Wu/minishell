@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 08:43:11 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/05 12:58:21 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/06 10:25:26 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,9 @@ void	expander(void)
 		if (token->tk_type == TK_DOUBLE_QT || token->tk_type == TK_WORD)
 		{
 			str = ft_strchr(token->str, '$');
-			if (str && *(str + 1) != '\0' && *(str + 1) != ' ' )
+			if (str && *(str + 1) != '\0' && *(str + 1) != ' '
+				&& (ft_isalnum(*(str + 1)) || *(str + 1) == '_'
+					|| *(str + 1) == '?'))
 				expand(token);
 		}
 		tk_list_manager(NEXT);

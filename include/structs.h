@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:57:07 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/29 15:31:17 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/06 12:53:58 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-#include "minishell.h"
-#include <stdbool.h> // why it doesn't work if I include it in minishell.h?
+# include "minishell.h"
+# include <stdbool.h> // why it doesn't work if I include it in minishell.h?
 //#include <fcntl.h>
 
 /*
-	TK_LOC_V: for defining local variable command, like if input is "echo a | name=sherry"
-			  then for 'name=sherry' the type of the token is TK_LOC_V. For this type, we
-			  do NOT put them into cmd list.
+	TK_LOC_V: for defining local variable command,
+		like if input is "echo a | name=sherry"
+				then for 'name=sherry' the type of the token is TK_LOC_V. For this type,
+					we
+				do NOT put them into cmd list.
 */
 typedef enum e_token_type
 {
@@ -35,7 +37,7 @@ typedef enum e_token_type
 	TK_WORD,
 	TK_LOC_V,
 	TK_ENV_V,
-}	t_token_type;
+}					t_token_type;
 
 typedef enum e_err_type
 {
@@ -53,14 +55,14 @@ typedef enum e_err_type
 	TOOMUCH,
 	HOME,
 	CD,
-}	t_err_type;
+}					t_err_type;
 
 /*
 	To tell which node you want to pointer to in a link list;
 	RESET: reset the pointer points the start of the list;
 	NEXT: pointer moves to the next node in the list;
-	CUR_COT: return the content of the current node;
-	PRE_COT: return the content of the next node;
+	CUR_COT: return (the content of the current node);
+	PRE_COT: return (the content of the next node);
 */
 typedef enum e_list_position
 {
@@ -68,20 +70,21 @@ typedef enum e_list_position
 	NEXT,
 	CUR_CNT,
 	NEXT_CNT,
-}	t_list_position;
+}					t_list_position;
 
 /*
 	It is for environment variables and local variables
 */
 typedef struct e_env
 {
-	char	*name;
-	char	*value;
-}	t_env;
+	char			*name;
+	char			*value;
+}					t_env;
 
 /*
 	@What is a token?
-	It might be a command, a word or a redirector,and so on. Such as "echo", "hello", "<";
+	It might be a command, a word or a redirector,and so on. Such as "echo",
+		"hello", "<";
 
 	@param
 	str:	the content of a token, such as "echo", "abd" or "|";
@@ -96,7 +99,7 @@ typedef struct s_token
 	char			*arg;
 	bool			merge;
 	int				idx;
-}	t_token;
+}					t_token;
 
 /*
 	@param
@@ -114,6 +117,7 @@ typedef struct s_ms
 	int				fd[2];
 	int				exit;
 	int				lines;
+	int				hstatus;
 	pid_t			pipeid[2];
 	int				hfd;
 	char			**env;
@@ -127,11 +131,12 @@ typedef struct s_ms
 	struct s_cmd	*cmds;
 	char			**file_error;
 	int				err;
-}	t_ms;
+}					t_ms;
 
 /*
 	@param
-	cmd:	the dyadic array of cmds. like "ls -l" will be stored as cmd[0]="ls", cmd[1]="-l"
+	cmd:	the dyadic array of cmds. like "ls
+			-l" will be stored as cmd[0]="ls", cmd[1]="-l"
 	infile:	the dyadic array of infiles;
 	limiter:	the dyadic array of delimiters, coming with '<<';
 	outfile:	the dyadic array of outfiles;
@@ -142,9 +147,9 @@ typedef struct s_ms
 	inf:	the last infile name in the part of input seperated by '|'.
 			For exapmle,
 			1. the input: "<<end <infile <<sp <infile2 cat | ..."
-			   in this case, inf = "infile2";
+				in this case, inf = "infile2";
 			2. the input: "<<end <infile <<sp cat | ..."
-			   in this case, inf = NULL; (becasue there is no infile)
+				in this case, inf = NULL; (becasue there is no infile)
 
 	intype:	the last < or << in the part of input seperated by '|'.
 			For exapmle, the input :"<<end <infile <<sp cat | ..."
@@ -187,8 +192,8 @@ typedef struct s_cmd
 	int				ct_del;
 	int				ct_w;
 	int				prev_fd;
-	struct s_list    *iolist;
+	struct s_list	*iolist;
 	struct s_cmd	*next;
-}	t_cmd;
+}					t_cmd;
 
-# endif
+#endif

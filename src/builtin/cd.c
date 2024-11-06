@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:09:48 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 12:30:47 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/06 11:27:29 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ void	update_dir(char *dir, char *name, int size)
 		i++;
 	while (head)
 	{
-		if (!ft_strnstr(((t_env *)head->content)->name, "OLDPWD", 6))
+		if (ft_strnstr(((t_env *)head->content)->name, name, 6))
 			break ;
 		head = head->next;
 	}
 	free(ms()->env[i]);
 	ms()->env[i] = ft_strdup(dir);
-	ft_free_str(((t_env *)head->content)->name);
-	((t_env *)head->content)->name = getcwd(NULL, 2048);
+	ft_free_str(((t_env *)head->content)->value);
+	((t_env *)head->content)->value = ft_strdup(ms()->cwd);
 }
 
 void	cddir(char *path)
@@ -61,8 +61,9 @@ void	cddir(char *path)
 	{
 		ft_putstr_fd("minishell: cd: error retrieving current directory\n", 2);
 		ms()->exit = 1;
-		dir = get_env("OLDPWD");
-		(ms()->cwd) = ft_strjoin(dir, "/..");
+		dir = ft_strdup(get_env("OLDPWD"));
+		free(ms()->cwd);
+		(ms()->cwd) = ft_strjoin(dir + 7, "/..");
 		free(dir);
 	}
 	dir = "PWD=";
@@ -92,9 +93,7 @@ int	ft_cd(char **cmd)
 	int			i;
 
 	i = checkcd(cmd);
-	if(!cmd[1])
-		return (1);
-	if (!ft_strcmp(cmd[1], "~"))
+	if (!cmd[1] || !ft_strcmp(cmd[1], "~"))
 		cddir(ms()->env[i] + 5);
 	else if (!cmd[1])
 		cddir(ms()->env[i]);

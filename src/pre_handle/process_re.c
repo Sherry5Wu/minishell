@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_re.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 09:50:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/05 13:55:29 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/05 20:57:17 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	handle_in_re(t_cmd **cmd, t_list *tk_node)
 	redir = new_variable(token_type, token->arg);
 	if (redir)
 		ft_lstadd_back(&((*cmd)->iolist), ft_lstnew(redir));
-
 }
 
 static void	handle_hdoc(t_cmd **cmd, t_list *tk_node)
@@ -40,10 +39,7 @@ static void	handle_hdoc(t_cmd **cmd, t_list *tk_node)
 	(*cmd)->limiter[(*cmd)->ct_del++]
 		= ft_strdup(((t_token *)((tk_node)->content))->arg);
 }
-/*
-	Token_type=3 is TK_OUT_RE
-	token_type=5 s TK_APPEND
-*/
+
 static void	handle_out_re(t_cmd **cmd, t_list *tk_node)
 {
 	t_env	*redir;
@@ -63,10 +59,7 @@ static void	handle_out_re(t_cmd **cmd, t_list *tk_node)
 	if (redir)
 		ft_lstadd_back(&((*cmd)->iolist), ft_lstnew(redir));
 }
-/*
-	@function
-	Work with add_cmd(), to add <,>,<< and >> tokens into a cmd node.
-*/
+
 void	process_re(t_cmd **cmd, t_list *tk_node)
 {
 	t_token	*token;
@@ -79,4 +72,3 @@ void	process_re(t_cmd **cmd, t_list *tk_node)
 	else if (token->tk_type == TK_OUT_RE || token->tk_type == TK_APPEND)
 		handle_out_re(cmd, tk_node);
 }
-

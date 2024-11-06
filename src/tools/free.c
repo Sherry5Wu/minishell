@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/05 20:27:59 by yzheng            #+#    #+#             */
+/*   Updated: 2024/11/05 20:28:12 by yzheng           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -16,14 +27,11 @@ void	pp_free(char **fly)
 		return ;
 	j = 0;
 	while (fly[j])
-			free(fly[j++]);
+		free(fly[j++]);
 	free(fly);
 	fly = NULL;
 }
 
-/*
-	For free the content of iolist.
-*/
 static void	free_env2(t_env *env)
 {
 	ft_free_str(env->name);
@@ -44,9 +52,9 @@ void	free_cmd_list(void)
 		pp_free(ms()->cmds->infile);
 		pp_free(ms()->cmds->limiter);
 		pp_free(ms()->cmds->outfile);
-		if(ms()->cmds->ofnum)
+		if (ms()->cmds->ofnum)
 			free(ms()->cmds->of);
-		if(ms()->cmds->ifnum)
+		if (ms()->cmds->ifnum)
 			free(ms()->cmds->inf);
 		ft_lstclear((&(ms()->cmds->iolist)), (void (*)(void *))free_env2);
 		free(ms()->cmds);
@@ -74,11 +82,4 @@ void	free_local_var_list(void)
 		temp = next_node;
 	}
 	ms()->local_var = NULL;
-}
-void	free_env(t_env *env)
-{
-	ft_free_str(env->name);
-	ft_free_str(env->value);
-	ft_free_str(env);
-	env = NULL;
 }

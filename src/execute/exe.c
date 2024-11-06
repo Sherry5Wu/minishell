@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:53:13 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 14:53:20 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/06 13:16:14 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	builtin(char **cmd)
 void	real_execute(t_cmd *cm)
 {
 	char	*path;
-
+	
 	if (!builtin(cm->cmd))
 	{
 		path = findvalidcmd(cm->cmd);
@@ -85,6 +85,8 @@ pid_t	exe_heart(int i, t_cmd *cm, int *prev_fd)
 	{
 		if (cm->herenum > 0)
 			pipeid = type_hdoc(cm);
+		if(ms()->exit==130 && ms()->hstatus == 1)
+			return (pipeid);
 		if (cm->outype == TK_PIPE)
 			pipeid = type_outpipe(cm, prev_fd);
 		else if ((cm->intype == TK_IN_RE || cm->intype == TK_NONE)
@@ -98,6 +100,7 @@ pid_t	exe_heart(int i, t_cmd *cm, int *prev_fd)
 			close(ms()->fd[0]);
 		}
 	}
+	
 	return (pipeid);
 }
 
@@ -113,17 +116,22 @@ void	exe(t_cmd *cm)
 	while (cm)
 	{
 		i = set_fd(cm);
-		if(!cm->cmd)
+		if (!cm->cmd)
 			break ;
 		if (b == 1 && cm->outype == TK_NONE)
-			if (ft_strncmp(cm->cmd[0], "echo", 4)
-				&& ft_strncmp(cm->cmd[0], "pwd", 3) && builtin(cm->cmd))
+			if (ft_strncmp(cm->cmd[0], "echo", 4) && ft_strncmp(cm->cmd[0],
+					"pwd", 3) && builtin(cm->cmd))
 				break ;
 		pipeid = exe_heart(i, cm, &prev_fd);
+		if(ms()->exit==130 && ms()->hstatus == 1)
+			break ;
 		cm = cm->next;
 	}
 	close_all(prev_fd);
+	signal_ignore();
 	while (wait(NULL) > 0)
 		;
+
 	signal_default();
+
 }

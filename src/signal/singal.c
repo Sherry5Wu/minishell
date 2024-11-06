@@ -6,52 +6,53 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:14:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/05 14:52:45 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/06 12:27:00 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	Document's requirements:
-	ctrl-C displays a new prompt on a new line.
-	ctrl-D exits the shell. Sending EOF signal,
-	ctrl-\ does nothing.
-*/
-
-/*
-	@What the function does?
-	To listening SIGINT (ctrl-C) and SIGQUIT(ctrl-\).
-
-	@action
-	When receive SIGINT, we call handle_sigint();
-	When receive SIGQUIT, we ignore it(SIG_IGN);
-*/
 void	signal_default(void)
 {
+	// printf("signal_default\n");// for tesingint\g!!!!!!!!!!!!!!!!!!!!!
+
+
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
-	if(ms()->heredoc_count == -1)
+	if (ms()->heredoc_count == -1)
 	{
-		printf("minishell: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n",ms()->lines,ms()->cmds->limiter[--ms()->limiter_count]);
+		printf("minishell: warning: here-document at ");
+		printf("line %d delimited", ms()->lines);
+		printf(" by end-of-file (wanted `%s')\n",
+			ms()->cmds->limiter[--ms()->limiter_count]);
 		ms()->heredoc_count = 0;
 	}
 }
 
 void	signal_heredoc(void)
 {
-	signal(SIGINT, handle_heredoc);
+	// printf("signal_heredoc\n");// for tesingint\g!!!!!!!!!!!!!!!!!!!!!
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_heredoc);
 }
-
+void	handle_child(int signal)
+{
+	if (signal == SIGINT)
+	{
+		(ms()->exit) = 130;
+		exit(130);
+	}
+}
 void	signal_child(void)
 {
-	signal(SIGINT, SIG_DFL);
+	// printf("signal_child\n");// for tesingint\g!!!!!!!!!!!!!!!!!!!!!
+	signal(SIGINT, handle_child);
 	signal(SIGQUIT, SIG_DFL);
 }
 
 void	signal_ignore(void)
 {
+	// printf("signal_ignore\n ");// for tesingint\g!!!!!!!!!!!!!!!!!!!!!
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
