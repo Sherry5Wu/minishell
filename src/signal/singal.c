@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   singal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:14:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/06 12:27:00 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:01:26 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	signal_default(void)
 {
-	// printf("signal_default\n");// for tesingint\g!!!!!!!!!!!!!!!!!!!!!
-
-
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	if (ms()->heredoc_count == -1)
@@ -31,10 +28,10 @@ void	signal_default(void)
 
 void	signal_heredoc(void)
 {
-	// printf("signal_heredoc\n");// for tesingint\g!!!!!!!!!!!!!!!!!!!!!
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_heredoc);
 }
+
 void	handle_child(int signal)
 {
 	if (signal == SIGINT)
@@ -43,16 +40,15 @@ void	handle_child(int signal)
 		exit(130);
 	}
 }
+
 void	signal_child(void)
 {
-	// printf("signal_child\n");// for tesingint\g!!!!!!!!!!!!!!!!!!!!!
 	signal(SIGINT, handle_child);
 	signal(SIGQUIT, SIG_DFL);
 }
 
 void	signal_ignore(void)
 {
-	// printf("signal_ignore\n ");// for tesingint\g!!!!!!!!!!!!!!!!!!!!!
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }

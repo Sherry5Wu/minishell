@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:57:07 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/06 12:53:58 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:10:50 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef enum e_token_type
 	TK_WORD,
 	TK_LOC_V,
 	TK_ENV_V,
-}					t_token_type;
+}	t_token_type;
 
 typedef enum e_err_type
 {
@@ -55,7 +55,7 @@ typedef enum e_err_type
 	TOOMUCH,
 	HOME,
 	CD,
-}					t_err_type;
+}	t_err_type;
 
 /*
 	To tell which node you want to pointer to in a link list;
@@ -70,7 +70,7 @@ typedef enum e_list_position
 	NEXT,
 	CUR_CNT,
 	NEXT_CNT,
-}					t_list_position;
+}	t_list_position;
 
 /*
 	It is for environment variables and local variables
@@ -79,7 +79,7 @@ typedef struct e_env
 {
 	char			*name;
 	char			*value;
-}					t_env;
+}	t_env;
 
 /*
 	@What is a token?
@@ -99,7 +99,7 @@ typedef struct s_token
 	char			*arg;
 	bool			merge;
 	int				idx;
-}					t_token;
+}	t_token;
 
 /*
 	@param
@@ -131,7 +131,7 @@ typedef struct s_ms
 	struct s_cmd	*cmds;
 	char			**file_error;
 	int				err;
-}					t_ms;
+}	t_ms;
 
 /*
 	@param
@@ -194,6 +194,6 @@ typedef struct s_cmd
 	int				prev_fd;
 	struct s_list	*iolist;
 	struct s_cmd	*next;
-}					t_cmd;
+}	t_cmd;
 
 #endif

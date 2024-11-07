@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:51:58 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 20:24:04 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:10:05 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*prompt(void)
 	char	*str;
 	char	*str2;
 
-	str = ft_strjoin(GREEN "minishell:" RESET_C, ms()->cwd);
+	str = ft_strjoin("minishell:", ms()->cwd);
 	if (!str)
 		return (NULL);
 	str2 = ft_strjoin(str, "$ ");

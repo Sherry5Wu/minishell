@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hanlde_signal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 10:18:58 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/06 14:56:50 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:01:06 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	handle_sigint(int signal)
 		(ms()->exit) = 130;
 	}
 }
-
 
 void	handle_heredoc(int signal)
 {

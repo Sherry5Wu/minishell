@@ -6,13 +6,13 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:53:18 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/06 12:58:06 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:53:55 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*replace_env(char *envname, char *src)
+static char	*replace_env(char *envname, char *src)
 {
 	int		i;
 	int		j;
@@ -56,7 +56,7 @@ static char	*checkdollar(char *doc_in)
 	return (doc_in);
 }
 
-void	getdoc(char *av, int hfd)
+static void	getdoc(char *av, int hfd)
 {
 	char	*doc_in;
 
@@ -71,7 +71,8 @@ void	getdoc(char *av, int hfd)
 			break ;
 		}
 		doc_in = checkdollar(doc_in);
-		if (ft_strncmp(doc_in, av, ft_strlen(av)) == 0)
+		if (ft_strncmp(doc_in, av, ft_strlen(av)) == 0
+			&& ft_strlen(doc_in) == ft_strlen(av))
 		{
 			free(doc_in);
 			break ;
@@ -101,61 +102,3 @@ void	heredoc(t_cmd *cm)
 		set_fd(cm);
 	}
 }
-void	restart2()
-{
-	if (ms()->prompt)
-		free(ms()->prompt);
-	if (ms()->input)
-		free(ms()->input);
-	ms()->fd[0] = -1;
-	ms()->fd[1] = -1;
-	ms()->in_fd = STDIN_FILENO;
-	ms()->out_fd = STDOUT_FILENO;
-	ft_lstclear((&ms()->tokens), (void (*)(void *))delete_token);
-	free_cmd_list();
-	ms()->hstatus = 1;
-}
-void	hdoc_parents(t_cmd *cm, int pipefd[2],pid_t	pid)
-{
-	close(pipefd[1]);
-	signal_ignore();
-	get_status(pid);
-	read(pipefd[0], &ms()->heredoc_count, sizeof(ms()->heredoc_count));
-	read(pipefd[0], &ms()->limiter_count, sizeof(ms()->limiter_count));
-	close(pipefd[0]);
-
-	if (cm->herenum)
-	{
-		if(ms()->exit != 130)
-			cm->intype = TK_IN_RE;
-		cm->inf = "here_doc";
-
-		set_fd(cm);
-	}
-	if(ms()->exit==130)
-		restart2();
-	signal_default();
-}
-pid_t	type_hdoc(t_cmd *cm)
-{
-	pid_t	pid;
-	int		pipefd[2];
-
-	if (pipe(pipefd) == -1)
-		ex_error("Pipe", PIPE, EXIT_FAILURE);
-	pid = fork();
-	if (pid == -1)
-		ex_error("Fork", FORK, EXIT_FAILURE);
-	if (pid == 0)
-	{
-		heredoc(cm);
-		close(pipefd[0]);
-		write(pipefd[1], &ms()->heredoc_count, sizeof(ms()->heredoc_count));
-		write(pipefd[1], &ms()->limiter_count, sizeof(ms()->limiter_count));
-		close(pipefd[1]);
-		exit(0);
-	}
-	hdoc_parents(cm, pipefd,pid);
-	return (pid);
-}
-

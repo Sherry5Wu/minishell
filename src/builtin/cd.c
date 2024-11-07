@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:09:48 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/06 11:27:29 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:14:07 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_env(char *name)
 	return (ms()->env[i]);
 }
 
-void	update_dir(char *dir, char *name, int size)
+static void	update_dir(char *dir, char *name, int size)
 {
 	t_list	*head;
 	int		i;
@@ -45,7 +45,7 @@ void	update_dir(char *dir, char *name, int size)
 	((t_env *)head->content)->value = ft_strdup(ms()->cwd);
 }
 
-void	cddir(char *path)
+static void	cddir(char *path)
 {
 	char	*dir;
 
@@ -72,7 +72,7 @@ void	cddir(char *path)
 	free(dir);
 }
 
-int	checkcd(char **cmd)
+static int	checkcd(char **cmd)
 {
 	int	i;
 

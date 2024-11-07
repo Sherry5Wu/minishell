@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:10:09 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 20:11:58 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:19:45 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-void	update_or_add(char *str)
+static void	update_or_add(char *str)
 {
 	int		i;
 	char	*name;
@@ -38,7 +38,7 @@ void	update_or_add(char *str)
 	free(name);
 }
 
-char	*lastequal(char *str)
+static char	*lastequal(char *str)
 {
 	int		length;
 	char	*last_equal;
@@ -62,7 +62,7 @@ char	*lastequal(char *str)
 	return (result);
 }
 
-int	handle_export_argument(char *arg)
+static int	handle_export_argument(char *arg)
 {
 	char	*result;
 	int		status;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:10:04 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 20:13:52 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:17:28 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	ft_isnum(char *str)
 	return (1);
 }
 
-int	isvalid(char *str)
+static int	isvalid(char *str)
 {
 	int	sign;
 

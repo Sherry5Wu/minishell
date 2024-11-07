@@ -6,13 +6,13 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 20:21:20 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/06 13:11:37 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:39:27 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	buildshell(void)
+static void	buildshell(void)
 {
 	while (1)
 	{
@@ -35,7 +35,7 @@ void	buildshell(void)
 	}
 }
 
-t_list	*get_env_list(char **envs)
+static t_list	*get_env_list(char **envs)
 {
 	t_list	*env_lt;
 	int		i;

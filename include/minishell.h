@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 11:00:09 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/06 12:15:35 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:43:21 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 
 /*err_type */
 # define MEMORY_ERROR "error: Could not allocate memory"
 # define UNQUOTED "error: The input is quoted incorrectly"
-//# define ADD_TOKEN_FAILED	"error: Could not add a new token node to token"
 # define PIPE_STX_ERR "minishell: syntax error near unexpected token `|'"
 # define NL_STX_ERR "minishell: syntax error near unexpected token `newline'"
 # define IN_RE_STX_ERR "minishell: syntax error near unexpected token `<'"
@@ -50,10 +50,28 @@
 # define ADD_CMD_ERR "error: Could not add a new command node"
 # define DEL_TOKEN_ERR "error: Could not delete a token from the list"
 
-# include <sys/stat.h>
-/*For global*/
-t_ms	*ms(void);
+/*<--------------------------------builtin--------------------------------->*/
+// cd.c
+int		ft_cd(char **cmd);
+char	*get_env(char *name);
+// echo.c
+int		ft_echo(char **cmd);
+// env.c
+int		ft_env(void);
+// exit.c
+void	ft_exit(char **cmd);
+// export_tools.c
+void	bubble_sort(char **env, int count);
+char	**sort_env(void);
+bool	ft_valid_character(char *str);
+int		count_array_size(char **str);
+void	add_env(char *str);
+// export.c
+int		ft_export(char **cmd);
+// unset.c
+int		ft_unset(char **cmd);
 
+/*<--------------------------------execute--------------------------------->*/
 /*For error*/
 int		export_err(char *cmd);
 void	open_error(char *message);
@@ -75,6 +93,8 @@ char	*prompt(void);
 char	*findpath(char **env);
 int		ft_strcmp(char *s1, char *s2);
 int		print_sorted_env(void);
+/*global*/
+t_ms	*ms(void);
 /*For execute*/
 /*<-----pipe && redirect----->*/
 void	get_status(pid_t pid);
@@ -84,27 +104,15 @@ pid_t	exe_pipe3(t_cmd *cm);
 pid_t	type_hdoc(t_cmd *cm);
 pid_t	type_outpipe(t_cmd *cm, int *prev_fd);
 /*<-----exe----->*/
+void	exe_final(void);
 char	*findvalidcmd(char **shellcmd);
 void	real_execute(t_cmd *cm);
 void	exe(t_cmd *cm);
 int		ft_env(void);
-/*<-----builtin----->*/
-int		ft_cd(char **cmd);
-int		ft_env(void);
-int		ft_unset(char **cmd);
-int		ft_echo(char **cmd);
-void	ft_exit(char **cmd);
-int		ft_export(char **cmd);
-int		print_sorted_env(void);
-char	**sort_env(void);
-char	*get_env(char *name);
-void	bubble_sort(char **env, int count);
-bool	ft_valid_character(char *str);
-int		count_array_size(char **str);
-void	add_env(char *str);
+void	heredoc(t_cmd *cm);
+
 /*<------redirect------->*/
 int		set_errors(char *message);
-int		check_files(t_list *cm);
 int		set_fd(t_cmd *cm);
 /*    pre_handle  */
 
@@ -174,13 +182,8 @@ void	add_node_to_list(t_list **list, char *str);
 
 // free.c
 void	ft_free_str(void *pointer);
-void	free_token_list(void);
 void	free_cmd_list(void);
 void	free_local_var_list(void);
 void	free_env(t_env *env);
-// void    free_token(t_token *token);
-
-# define GREEN "\033[1;32m"
-# define RESET_C "\033[0m"
 
 #endif

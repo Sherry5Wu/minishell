@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:08:50 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/06 12:44:20 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:38:12 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,6 @@ static void	print_sig_info(void)
 		ft_putstr_fd("Segmentation fault (core dumped)\n", STDERR_FILENO);
 	else if (ms()->exit == 130)
 		ft_putstr_fd("\n", STDERR_FILENO);
-}
-
-void	free_list(t_list *head)
-{
-	t_list	*temp;
-
-	while (head != NULL)
-	{
-		temp = head;
-		head = head->next;
-		free(temp->content);
-		free(temp);
-	}
 }
 
 void	restart(int ex)
@@ -51,7 +38,6 @@ void	restart(int ex)
 		print_sig_info();
 	if (ex)
 	{
-	
 		free(ms()->cwd);
 		pp_free(ms()->env);
 		free_local_var_list();

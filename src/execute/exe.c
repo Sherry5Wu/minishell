@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:53:13 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/06 13:16:14 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:23:30 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static inline void	ft_execve_failed(char **shellcmd, char *path)
 		free(path);
 }
 
-int	builtin(char **cmd)
+static int	builtin(char **cmd)
 {
 	int	size;
 
@@ -64,7 +64,7 @@ int	builtin(char **cmd)
 void	real_execute(t_cmd *cm)
 {
 	char	*path;
-	
+
 	if (!builtin(cm->cmd))
 	{
 		path = findvalidcmd(cm->cmd);
@@ -76,7 +76,7 @@ void	real_execute(t_cmd *cm)
 	exit(ms()->exit);
 }
 
-pid_t	exe_heart(int i, t_cmd *cm, int *prev_fd)
+static pid_t	exe_heart(int i, t_cmd *cm, int *prev_fd)
 {
 	pid_t	pipeid;
 
@@ -85,7 +85,7 @@ pid_t	exe_heart(int i, t_cmd *cm, int *prev_fd)
 	{
 		if (cm->herenum > 0)
 			pipeid = type_hdoc(cm);
-		if(ms()->exit==130 && ms()->hstatus == 1)
+		if (ms()->exit == 130 && ms()->hstatus == 1)
 			return (pipeid);
 		if (cm->outype == TK_PIPE)
 			pipeid = type_outpipe(cm, prev_fd);
@@ -100,13 +100,11 @@ pid_t	exe_heart(int i, t_cmd *cm, int *prev_fd)
 			close(ms()->fd[0]);
 		}
 	}
-	
 	return (pipeid);
 }
 
 void	exe(t_cmd *cm)
 {
-	pid_t	pipeid;
 	int		prev_fd;
 	int		i;
 	int		b;
@@ -122,16 +120,11 @@ void	exe(t_cmd *cm)
 			if (ft_strncmp(cm->cmd[0], "echo", 4) && ft_strncmp(cm->cmd[0],
 					"pwd", 3) && builtin(cm->cmd))
 				break ;
-		pipeid = exe_heart(i, cm, &prev_fd);
-		if(ms()->exit==130 && ms()->hstatus == 1)
+		exe_heart(i, cm, &prev_fd);
+		if (ms()->exit == 130 && ms()->hstatus == 1)
 			break ;
 		cm = cm->next;
 	}
 	close_all(prev_fd);
-	signal_ignore();
-	while (wait(NULL) > 0)
-		;
-
-	signal_default();
-
+	exe_final();
 }

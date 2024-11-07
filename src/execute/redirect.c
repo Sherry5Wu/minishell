@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:20:57 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 20:16:31 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:25:50 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	set_errors(char *message)
 	return (0);
 }
 
-int	check_files(t_list *cm)
+static int	check_files(t_list *cm)
 {
 	int	fd;
 
@@ -63,7 +63,7 @@ int	check_files(t_list *cm)
 	return (1);
 }
 
-int	set_fd_in(t_cmd *cm)
+static int	set_fd_in(t_cmd *cm)
 {
 	t_list	*temp;
 
@@ -88,7 +88,7 @@ int	set_fd_in(t_cmd *cm)
 	return (0);
 }
 
-int	set_fd_out(t_cmd *cm)
+static int	set_fd_out(t_cmd *cm)
 {
 	if (cm->outype == TK_OUT_RE)
 		(ms()->out_fd) = open(cm->of, O_WRONLY | O_CREAT | O_TRUNC, 0644);

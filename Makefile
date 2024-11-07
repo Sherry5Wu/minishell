@@ -5,7 +5,7 @@ DEFAULT := \033[0;39m
 
 CC := cc
 
-CFLAGS := -Wall -Wextra -Werror -fsanitize=address \
+CFLAGS := -Wall -Wextra -Werror\
 	-I ./include -I ./libft/libft -I ./libft/printf -I ./libft/get_next_line
 
 LIBFT := ./libft/libft
