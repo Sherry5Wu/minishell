@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 11:00:09 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:43:21 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/11 08:49:01 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 /*
-	<stdio.h>:	printf();
 	<stdbool.h>	bool type;
 	<readline/readline.h>	readline();
 	<readline/readline.h>	operate the readline history;
@@ -22,7 +21,6 @@
 	<signal.h>	the signal functions;
 	<unistd.h>	for STDERR_FILENO
 */
-# include "../libft/get_next_line/get_next_line.h"
 # include "../libft/libft/libft.h"
 # include "../libft/printf/printf.h"
 # include "./structs.h"
@@ -32,7 +30,6 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>

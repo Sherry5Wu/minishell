@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:57:07 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/07 11:10:50 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/11 08:46:28 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 # define STRUCTS_H
 
 # include "minishell.h"
-# include <stdbool.h> // why it doesn't work if I include it in minishell.h?
-//#include <fcntl.h>
+# include <stdbool.h>
 
 /*
-	TK_LOC_V: for defining local variable command,
-		like if input is "echo a | name=sherry"
-				then for 'name=sherry' the type of the token is TK_LOC_V. For this type,
-					we
-				do NOT put them into cmd list.
+	TK_LOC_V: for defining local variable command, like if input is
+	"echo a | name=sherry" then for 'name=sherry' the type of the token 
+	is TK_LOC_V.
+	For this type,we do NOT put them into cmd list.
 */
 typedef enum e_token_type
 {
@@ -70,7 +68,7 @@ typedef enum e_list_position
 	NEXT,
 	CUR_CNT,
 	NEXT_CNT,
-}	t_list_position;
+}			t_list_position;
 
 /*
 	It is for environment variables and local variables

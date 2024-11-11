@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:20:57 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:25:50 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/08 10:03:16 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	set_fd(t_cmd *cm)
 		return (1);
 	while (i < cm->ofnum)
 	{
-		ofd = open(cm->outfile[i++], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		ofd = open(cm->outfile[i++], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (ofd == -1)
 		{
 			close_inout();

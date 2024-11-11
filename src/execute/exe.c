@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:53:13 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:23:30 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/07 15:51:05 by yzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,31 +76,32 @@ void	real_execute(t_cmd *cm)
 	exit(ms()->exit);
 }
 
-static pid_t	exe_heart(int i, t_cmd *cm, int *prev_fd)
+static int	exe_heart(int i, t_cmd *cm, int *prev_fd, int b)
 {
-	pid_t	pipeid;
-
-	pipeid = 0;
 	if (i)
 	{
 		if (cm->herenum > 0)
-			pipeid = type_hdoc(cm);
+			type_hdoc(cm);
 		if (ms()->exit == 130 && ms()->hstatus == 1)
-			return (pipeid);
+			return (1);
 		if (cm->outype == TK_PIPE)
-			pipeid = type_outpipe(cm, prev_fd);
+			type_outpipe(cm, prev_fd);
 		else if ((cm->intype == TK_IN_RE || cm->intype == TK_NONE)
 			&& (cm->outype == TK_OUT_RE || cm->outype == TK_NONE
 				|| cm->outype == TK_APPEND))
-			pipeid = exe_pipe2(cm);
+			exe_pipe2(cm);
 		else if (cm->intype == TK_PIPE && (cm->outype == TK_OUT_RE
 				|| cm->outype == TK_NONE || cm->outype == TK_APPEND))
 		{
-			pipeid = exe_pipe3(cm);
+			exe_pipe3(cm);
 			close(ms()->fd[0]);
 		}
+		if (ms()->exit == 130 && b > 1)
+			printf("\n");
+		if (ms()->exit == 130 && b == 1)
+			restart(0);
 	}
-	return (pipeid);
+	return (1);
 }
 
 void	exe(t_cmd *cm)
@@ -120,8 +121,8 @@ void	exe(t_cmd *cm)
 			if (ft_strncmp(cm->cmd[0], "echo", 4) && ft_strncmp(cm->cmd[0],
 					"pwd", 3) && builtin(cm->cmd))
 				break ;
-		exe_heart(i, cm, &prev_fd);
-		if (ms()->exit == 130 && ms()->hstatus == 1)
+		exe_heart(i, cm, &prev_fd, b);
+		if ((ms()->exit == 130 && ms()->hstatus == 1))
 			break ;
 		cm = cm->next;
 	}

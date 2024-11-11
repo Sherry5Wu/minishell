@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:53:18 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:53:55 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/08 13:05:13 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*replace_env(char *envname, char *src)
 	replacement = NULL;
 	i = 1;
 	j = 0;
-	while (isprint(envname[i]) && envname[i] != ' ' && envname[i] != '\0')
+	while (ft_isprint(envname[i]) && envname[i] != ' ' && envname[i] != '\0')
 		i++;
 	dest = ft_strndup(envname, i);
 	if (dest == NULL)

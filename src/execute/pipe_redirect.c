@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:54:18 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:00:26 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/08 13:08:06 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ pid_t	exe_pipe(t_cmd *cm)
 		close(ms()->fd[1]);
 		real_execute(cm);
 	}
+	get_status(pid);
 	return (pid);
 }
 
@@ -102,7 +103,5 @@ pid_t	exe_pipe3(t_cmd *cm)
 void	exe_final(void)
 {
 	signal_ignore();
-	while (wait(NULL) > 0)
-		;
 	signal_default();
 }

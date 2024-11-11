@@ -5,27 +5,24 @@ DEFAULT := \033[0;39m
 
 CC := cc
 
-CFLAGS := -Wall -Wextra -Werror\
-	-I ./include -I ./libft/libft -I ./libft/printf -I ./libft/get_next_line
+CFLAGS := -Wall -Wextra -Werror \
+	-I ./include -I ./libft/libft -I ./libft/printf
 
 LIBFT := ./libft/libft
 PRINTF := ./libft/printf
-GETNEXTLINE := ./libft/get_next_line
-LIBS := $(LIBFT)/libft.a $(PRINTF)/libftprintf.a $(GETNEXTLINE)/get_next_line.a -lreadline
+LIBS := $(LIBFT)/libft.a $(PRINTF)/libftprintf.a -lreadline
 
 SRCS_DIR = ./src
-SRCS_PDIR = pre_handle
-SRCS_SDIR = signal
-SRCS_TDIR = tools
-SRCS_EDIR = execute
-SRCS_BUIL = builtin
+SRCS_SUBDIR = builtin execute pre_handle signal tools
+VPATH = $(SRCS_DIR) $(addprefix $(SRCS_DIR)/, $(SRCS_SUBDIR))
 
-SRCS = $(wildcard $(SRCS_DIR)/*.c) \
-		$(wildcard $(SRCS_DIR)/$(SRCS_PDIR)/*.c) \
-		$(wildcard $(SRCS_DIR)/$(SRCS_SDIR)/*.c) \
-		$(wildcard $(SRCS_DIR)/$(SRCS_TDIR)/*.c) \
-		$(wildcard $(SRCS_DIR)/$(SRCS_EDIR)/*.c) \
-		$(wildcard $(SRCS_DIR)/$(SRCS_BUIL)/*.c)
+SRCS =	main.c \
+		cd.c echo.c env.c exit.c export_tools.c export.c unset.c \
+		exe.c heredoc.c pipe_redirect.c redirect.c type.c \
+		add_cmd_utils.c checking_token_type.c checking.c del_empty_node_extra_pipe.c \
+		expander.c lexer.c local_var.c operate_token.c parsing.c pre_handle.c process_re.c \
+		handle_signal.c signal.c \
+		error.c exe_tools.c free.c path.c restart.c tool.c variable_list.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -38,7 +35,6 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@${MAKE} -C ${LIBFT}
 	@${MAKE} -C ${PRINTF}
-	@${MAKE} -C ${GETNEXTLINE}
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 	@echo "$(GREEN)minishell has been generated.$(DEFAULT)"
 
@@ -46,14 +42,12 @@ clean:
 	@rm -rf $(OBJS)
 	@${MAKE} -C ${LIBFT} clean
 	@${MAKE} -C ${PRINTF} clean
-	@${MAKE} -C ${GETNEXTLINE} clean
 	@echo "$(GREEN)OBJS has been cleaned.$(DEFAULT)"
 
 fclean: clean
 	@rm -rf $(NAME)
 	@${MAKE} -C ${LIBFT} fclean
 	@${MAKE} -C ${PRINTF} fclean
-	@${MAKE} -C ${GETNEXTLINE} fclean
 	@echo "$(GREEN)minishell has been cleaned.$(DEFAULT)"
 
 re: fclean all

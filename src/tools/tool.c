@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tool.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:04:56 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 20:28:23 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/11 08:44:12 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*replace_first_substring(char *str, char *old_sub, char *new_sub)
 	ft_strlcat(result, new_sub, ft_strlen(result) + new_len + 1);
 	ft_strlcat(result, pos + old_len, ft_strlen(result) + ft_strlen(pos
 			+ old_len) + 1);
+	ft_free_str(old_sub);
 	return (result);
 }
 
