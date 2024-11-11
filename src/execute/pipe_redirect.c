@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:54:18 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/08 13:08:06 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/11 12:15:47 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ pid_t	exe_pipe2(t_cmd *cm)
 		real_execute(cm);
 	}
 	get_status(pid);
+	if (ms()->exit == 130)
+		ms()->hstatus = 1;
 	return (pid);
 }
 

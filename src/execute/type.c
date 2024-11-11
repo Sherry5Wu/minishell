@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:53:18 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/08 13:05:13 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/11 11:57:20 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,5 @@ void	heredoc(t_cmd *cm)
 			open_error("here_doc");
 		getdoc(cm->limiter[ms()->limiter_count++], ms()->hfd);
 		close(ms()->hfd);
-	}
-	if (cm->intype == TK_HDOC)
-	{
-		cm->intype = TK_IN_RE;
-		cm->inf = "here_doc";
-		set_fd(cm);
 	}
 }

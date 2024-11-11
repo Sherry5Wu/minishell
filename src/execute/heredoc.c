@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 10:59:12 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 15:17:29 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/11 12:16:07 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,15 @@ static void	hdoc_parents(t_cmd *cm, int pipefd[2], pid_t pid)
 	read(pipefd[0], &ms()->heredoc_count, sizeof(ms()->heredoc_count));
 	read(pipefd[0], &ms()->limiter_count, sizeof(ms()->limiter_count));
 	close(pipefd[0]);
-	if (cm->herenum)
+	if (cm->intype == TK_HDOC)
 	{
 		if (ms()->exit != 130)
 			cm->intype = TK_IN_RE;
-		cm->inf = "here_doc";
+		if (cm->inf)
+			free(cm->inf);
+		cm->inf = ft_strdup("here_doc");
+		if (!cm->ifnum)
+			ms()->cmds->ifnum++;
 		set_fd(cm);
 	}
 	if (ms()->exit == 130)
