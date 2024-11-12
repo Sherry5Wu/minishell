@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 08:43:11 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/06 10:25:26 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*replace(char *str, char *name, char *value)
 	ft_strlcat(newstr, bef_name, (len + 1));
 	ft_strlcat(newstr, value, (len + 1));
 	ft_strlcat(newstr, (tmp + ft_strlen(name)), len + 1);
-	free(bef_name);
+	ft_free_str(bef_name);
 	return (newstr);
 }
 
@@ -73,9 +73,9 @@ static void	expand(t_token *token)
 			value = get_variable_value(name);
 		tmp = token->str;
 		token->str = replace(token->str, name, value);
-		free(name);
-		free(value);
-		free(tmp);
+		ft_free_str(name);
+		ft_free_str(value);
+		ft_free_str(tmp);
 	}
 }
 

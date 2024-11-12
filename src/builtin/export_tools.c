@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 20:10:50 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:17:58 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,6 @@ void	add_env(char *str)
 	new_env[i + 1] = NULL;
 	if (new_env[i] == NULL)
 		restart(1);
-	pp_free(ms()->env);
+	pp_ft_free_str(ms()->env);
 	ms()->env = new_env;
 }

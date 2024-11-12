@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:18:24 by yzheng            #+#    #+#             */
-/*   Updated: 2024/04/19 15:18:25 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int main() {
     while (head != NULL) {
         t_list *tmp = head;
         head = head->next;
-        free(tmp);
+        ft_free_str(tmp);
     }
 
     return 0;

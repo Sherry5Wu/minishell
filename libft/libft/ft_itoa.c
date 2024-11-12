@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:20:44 by yzheng            #+#    #+#             */
-/*   Updated: 2024/04/16 12:20:46 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int main() {
         char *result = ft_itoa(test_cases[i]);
         if (result != NULL) {
             printf("Integer: %d, String: %s\n", test_cases[i], result);
-            free(result);
+            ft_free_str(result);
         } else {
             printf("Memory allocation failed for integer: %d\n", test_cases[i]);
         }

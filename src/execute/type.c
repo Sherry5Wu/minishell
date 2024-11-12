@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 09:53:18 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/11 11:57:20 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,19 @@ static void	getdoc(char *av, int hfd)
 		if (!doc_in)
 		{
 			ms()->heredoc_count = -1;
-			free(doc_in);
+			ft_free_str(doc_in);
 			break ;
 		}
 		doc_in = checkdollar(doc_in);
 		if (ft_strncmp(doc_in, av, ft_strlen(av)) == 0
 			&& ft_strlen(doc_in) == ft_strlen(av))
 		{
-			free(doc_in);
+			ft_free_str(doc_in);
 			break ;
 		}
 		ft_putstr_fd(doc_in, hfd);
 		ft_putstr_fd("\n", hfd);
-		free(doc_in);
+		ft_free_str(doc_in);
 	}
 }
 

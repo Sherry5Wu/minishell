@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:35:42 by yzheng            #+#    #+#             */
-/*   Updated: 2024/04/16 10:20:48 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void print_test(char const *s, unsigned int start, size_t len) {
     char *result = ft_substr(s, start, len);
     printf("Result for '%s' starting at %u with length %zu: '%s'\n", 
 	s, start, len, result ? result : "NULL");
-    free(result);
+    ft_free_str(result);
 }
 
 int main() {

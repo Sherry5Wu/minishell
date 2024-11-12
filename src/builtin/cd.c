@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:09:48 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:14:07 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 14:15:50 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	update_dir(char *dir, char *name, int size)
 			break ;
 		head = head->next;
 	}
-	free(ms()->env[i]);
+	ft_free_str(ms()->env[i]);
 	ms()->env[i] = ft_strdup(dir);
 	ft_free_str(((t_env *)head->content)->value);
 	((t_env *)head->content)->value = ft_strdup(ms()->cwd);
@@ -53,23 +53,23 @@ static void	cddir(char *path)
 		ex_error(" cd: ", HOME, 2);
 	dir = ft_strjoin("OLDPWD=", ms()->cwd);
 	update_dir(dir, "OLDPWD", 6);
-	free(dir);
+	ft_free_str(dir);
 	chdir(path);
-	free(ms()->cwd);
+	ft_free_str(ms()->cwd);
 	(ms()->cwd) = getcwd(NULL, 2048);
 	if (!(ms()->cwd))
 	{
 		ft_putstr_fd("minishell: cd: error retrieving current directory\n", 2);
 		ms()->exit = 1;
 		dir = ft_strdup(get_env("OLDPWD"));
-		free(ms()->cwd);
+		ft_free_str(ms()->cwd);
 		(ms()->cwd) = ft_strjoin(dir + 7, "/..");
-		free(dir);
+		ft_free_str(dir);
 	}
 	dir = "PWD=";
 	dir = ft_strjoin(dir, ms()->cwd);
 	update_dir(dir, "PWD", 3);
-	free(dir);
+	ft_free_str(dir);
 }
 
 static int	checkcd(char **cmd)
@@ -80,7 +80,13 @@ static int	checkcd(char **cmd)
 	while (cmd[i])
 		i++;
 	if (i > 2)
-		ex_error(cmd[0], TOOMUCH, 1);
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd[0], 2);
+		ft_putstr_fd(" : too many arguments\n", 2);
+		ms()->exit = 1;
+		return (-1);
+	}
 	i = 0;
 	while (ms()->env[i] && !ft_strnstr(ms()->env[i], "HOME", 4))
 		i++;
@@ -93,6 +99,8 @@ int	ft_cd(char **cmd)
 	int			i;
 
 	i = checkcd(cmd);
+	if (i == -1)
+		return (1);
 	if (!cmd[1] || !ft_strcmp(cmd[1], "~"))
 		cddir(ms()->env[i] + 5);
 	else if (!cmd[1])

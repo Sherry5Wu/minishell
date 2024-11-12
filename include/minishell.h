@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 11:00:09 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/11 08:49:01 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:57:36 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	restart(int exit);
 
 /*For	tools*/
 void	close_inout(void);
-void	pp_free(char **fly);
+void	pp_ft_free_str(char **fly);
 void	close_all(int prev_fd);
 void	check_infile(t_cmd *cm);
 char	*ft_strndup(char *src, int size);
@@ -155,6 +155,8 @@ void	process_re(t_cmd **cmd, t_list *tk_node);
 bool	are_all_def_loc_var(void);
 void	del_empty_node_extra_pipe(t_list **list);
 void	recorrect_cmd_intype(t_cmd *list);
+
+bool	handle_wave_sign(t_list *list);
 
 /*..signal...*/
 void	signal_default(void);

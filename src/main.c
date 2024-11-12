@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 20:21:20 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 15:18:06 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:46:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	initenv(char **env)
 		if (ms()->env[i] == NULL)
 		{
 			while (i)
-				free(ms()->env[i--]);
+				ft_free_str(ms()->env[i--]);
 			exit(1);
 		}
 		i++;
@@ -86,8 +86,8 @@ static void	init_ms(char **env)
 	ms()->env_list = get_env_list(env);
 	initenv(env);
 	ms()->lines = 0;
-	ms()->fd[0] = -1;
-	ms()->fd[1] = -1;
+	ms()->fd[0] = -2;
+	ms()->fd[1] = -2;
 	if (!(ms()->cwd))
 	{
 		perror("getcwd() error");

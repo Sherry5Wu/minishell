@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:51:58 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:10:05 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ char	*prompt(void)
 	str2 = ft_strjoin(str, "$ ");
 	if (!str2)
 	{
-		free(str);
+		ft_free_str(str);
 		return (NULL);
 	}
-	free(str);
+	ft_free_str(str);
 	return (str2);
 }

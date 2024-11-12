@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 10:59:12 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/11 12:16:07 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	restart2(void)
 {
 	if (ms()->prompt)
-		free(ms()->prompt);
+		ft_free_str(ms()->prompt);
 	if (ms()->input)
-		free(ms()->input);
+		ft_free_str(ms()->input);
 	ms()->fd[0] = -1;
 	ms()->fd[1] = -1;
 	ms()->in_fd = STDIN_FILENO;
@@ -40,7 +40,7 @@ static void	hdoc_parents(t_cmd *cm, int pipefd[2], pid_t pid)
 		if (ms()->exit != 130)
 			cm->intype = TK_IN_RE;
 		if (cm->inf)
-			free(cm->inf);
+			ft_free_str(cm->inf);
 		cm->inf = ft_strdup("here_doc");
 		if (!cm->ifnum)
 			ms()->cmds->ifnum++;

@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:28:56 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/01 09:33:29 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ void	delete_token(t_token *token)
 	if (!token)
 		return ;
 	if (token->str)
-		free(token->str);
+		ft_free_str(token->str);
 	token->str = NULL;
 	if (token->arg)
-		free(token->arg);
+		ft_free_str(token->arg);
 	token->arg = NULL;
 	token->tk_type = -1;
 	token->idx = -1;

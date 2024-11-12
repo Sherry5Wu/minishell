@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 20:12:44 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:20:34 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	remove_env(int index)
 	if (index == -1)
 		return ;
 	i = index;
-	free(ms()->env[index]);
+	ft_free_str(ms()->env[index]);
 	while (ms()->env[i])
 	{
 		ms()->env[i] = ms()->env[i + 1];

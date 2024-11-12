@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:48:19 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/05 20:56:27 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:58:31 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	merge(t_list *list)
 		next = (list->next)->content;
 		tmp = cur->str;
 		cur->str = ft_strjoin(cur->str, next->str);
-		free(tmp);
+		ft_free_str(tmp);
 		if (!next->merge)
 			cur->merge = next->merge;
 		delete = list->next;
@@ -117,6 +117,8 @@ bool	pre_handle(void)
 	if (!check_syntax())
 		return (false);
 	merge(ms()->tokens);
+	if (!handle_wave_sign(ms()->tokens))
+		return (false);
 	restruct_token();
 	expander();
 	add_variable_type(ms()->tokens);

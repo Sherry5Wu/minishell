@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:10:09 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:19:45 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ static void	update_or_add(char *str)
 		add_env(str);
 	else
 	{
-		free(ms()->env[i]);
+		ft_free_str(ms()->env[i]);
 		ms()->env[i] = ft_strdup(str);
 	}
 	add_node_to_list(&ms()->env_list, str);
-	free(name);
+	ft_free_str(name);
 }
 
 static char	*lastequal(char *str)

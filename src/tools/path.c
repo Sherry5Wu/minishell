@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:22:31 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 20:25:15 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,17 @@ static inline char	*check_filename(char **filename, char **cmd)
 		if (!path)
 			return (0);
 		full_path = ft_strjoin(path, cmd[0]);
-		free(path);
+		ft_free_str(path);
 		if (!full_path)
 			return (0);
 		if (access(full_path, F_OK) == 0 && access(full_path, X_OK) == 0)
 		{
-			pp_free(filename);
+			pp_ft_free_str(filename);
 			return (full_path);
 		}
-		free(full_path);
+		ft_free_str(full_path);
 	}
-	pp_free(filename);
+	pp_ft_free_str(filename);
 	return (0);
 }
 

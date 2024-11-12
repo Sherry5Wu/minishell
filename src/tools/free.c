@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 20:27:59 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/11 11:49:27 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:27 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_free_str(void *pointer)
 	pointer = NULL;
 }
 
-void	pp_free(char **fly)
+void	pp_ft_free_str(char **fly)
 {
 	int	j;
 
@@ -27,8 +27,8 @@ void	pp_free(char **fly)
 		return ;
 	j = 0;
 	while (fly[j])
-		free(fly[j++]);
-	free(fly);
+		ft_free_str(fly[j++]);
+	ft_free_str(fly);
 	fly = NULL;
 }
 
@@ -48,16 +48,16 @@ void	free_cmd_list(void)
 	while (ms()->cmds)
 	{
 		next_cmd = ms()->cmds->next;
-		pp_free(ms()->cmds->cmd);
-		pp_free(ms()->cmds->infile);
-		pp_free(ms()->cmds->limiter);
-		pp_free(ms()->cmds->outfile);
+		pp_ft_free_str(ms()->cmds->cmd);
+		pp_ft_free_str(ms()->cmds->infile);
+		pp_ft_free_str(ms()->cmds->limiter);
+		pp_ft_free_str(ms()->cmds->outfile);
 		if (ms()->cmds->ofnum)
-			free(ms()->cmds->of);
+			ft_free_str(ms()->cmds->of);
 		if (ms()->cmds->ifnum)
-			free(ms()->cmds->inf);
+			ft_free_str(ms()->cmds->inf);
 		ft_lstclear((&(ms()->cmds->iolist)), (void (*)(void *))free_env2);
-		free(ms()->cmds);
+		ft_free_str(ms()->cmds);
 		ms()->cmds = next_cmd;
 	}
 	ms()->cmds = NULL;
@@ -78,7 +78,7 @@ void	free_local_var_list(void)
 		next_node = temp->next;
 		ft_free_str(var->name);
 		ft_free_str(var->value);
-		free(temp);
+		ft_free_str(temp);
 		temp = next_node;
 	}
 	ms()->local_var = NULL;

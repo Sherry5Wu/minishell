@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:18:38 by yzheng            #+#    #+#             */
-/*   Updated: 2024/04/19 15:18:39 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void *double_content(void *content) {
 
 
 void free_content(void *content) {
-    free(content);
+    ft_free_str(content);
 }// Print the content of the list for testing results
 void print_list(t_list *lst) {
     while (lst != NULL) {

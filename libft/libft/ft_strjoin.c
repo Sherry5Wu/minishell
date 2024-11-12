@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yzheng <yzheng@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:07:16 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/05 17:11:08 by yzheng           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void print_strjoin_result(char const *s1, char const *s2) {
     char *result = ft_strjoin(s1, s2);
     printf("Joining [%s] and [%s]: Result = [%s]\n", s1 ? s1 : "NULL",
    	s2 ? s2 : "NULL", result ? result : "NULL");
-    free(result); // 确保释放分配的内存
+    ft_free_str(result); // 确保释放分配的内存
 }
 int main() {
     // 正常情况
