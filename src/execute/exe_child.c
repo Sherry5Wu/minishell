@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:12:11 by jingwu            #+#    #+#             */
-/*   Updated: 2024/11/14 11:16:36 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/15 10:04:51 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	builtin(char **cmd)
 	else if (size == 6 && !ft_strncmp(cmd[0], "export", 6))
 		return (ft_export(cmd));
 	else if (size == 4 && !ft_strncmp(cmd[0], "exit", 4))
-		ft_exit(cmd);
+		return(ft_exit(cmd));
 	return (0);
 }
 

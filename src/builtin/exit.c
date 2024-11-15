@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:10:04 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/07 11:17:28 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/15 10:04:34 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	isvalid(char *str)
 		return (ft_strcmp(str, "9223372036854775807") > 0);
 }
 
-void	ft_exit(char **cmd)
+int	ft_exit(char **cmd)
 {
 	int	i;
 
@@ -65,6 +65,7 @@ void	ft_exit(char **cmd)
 		ft_putstr_fd("exit\n", 1);
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		ms()->exit = 1;
+		return (1);
 	}
 	else if (i > 2 && !ft_isnum(cmd[1]))
 		ft_exit_tool(cmd[1]);
@@ -76,4 +77,5 @@ void	ft_exit(char **cmd)
 		ms()->exit = ft_atoi(cmd[1]) % 256;
 	}
 	restart(1);
+	return(0);
 }
