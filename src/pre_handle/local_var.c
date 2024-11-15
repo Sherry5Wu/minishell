@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:05:21 by jingwu            #+#    #+#             */
-/*   Updated: 2024/10/24 11:37:40 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/15 08:10:04 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ static bool	is_there_invalid_defination(t_list *list)
 	@function
 	Working with are_all_def_loc_var() function, set the token str to empty
 	when it fullfills certain conditions.
+	Exception:
+		input: echo a=b | n=3    --> don't set a=b t empty string.
+
 */
 static void	set_token_str_empty(t_list *list)
 {
@@ -102,6 +105,16 @@ static void	set_token_str_empty(t_list *list)
 	while (list)
 	{
 		token = (t_token *)(list->content);
+		if (!ft_strcmp(token->str, "echo") && ft_strlen(token->str) == 4)
+		{
+			if (list->next && list->next->next)
+			{
+				list = list->next->next;
+				continue ;
+			}
+			else
+				break ;
+		}
 		if (token->tk_type == TK_LOC_V && is_defining_var(token->str) == true)
 		{
 			ft_free_str(token->str);
@@ -126,7 +139,7 @@ static void	set_token_str_empty(t_list *list)
 									don't go to execution
 	type=2	4: name=123 | 1a=3	--> don't save any variable,
 									empty "name=123", go to execution
-	type=3	5: name=123 | echo a	--> don't save any variable,
+	type=3	5: name=123 | echo a=b	--> don't save any variable,
 									empty "name=123", go to execution
 	type=3	6: name=123 | 1name=123 | echo a	--> don't save any variable,
 											empty "name=123", go to execution

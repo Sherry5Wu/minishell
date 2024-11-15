@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 10:59:12 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/12 13:47:18 by jingwu           ###   ########.fr       */
+/*   Updated: 2024/11/14 11:10:37 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	hdoc_parents(t_cmd *cm, int pipefd[2], pid_t pid)
 		cm->inf = ft_strdup("here_doc");
 		if (!cm->ifnum)
 			ms()->cmds->ifnum++;
-		set_fd(cm);
+		(ms()->in_fd) = open(cm->inf, O_RDONLY, 0444);
 	}
 	if (ms()->exit == 130)
 		restart2();

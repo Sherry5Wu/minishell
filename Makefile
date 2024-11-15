@@ -1,5 +1,4 @@
 NAME = minishell
-NAMEB = minishell_bonus
 
 GREEN := \033[1;92m
 DEFAULT := \033[0;39m
@@ -19,7 +18,7 @@ VPATH = $(SRCS_DIR) $(addprefix $(SRCS_DIR)/, $(SRCS_SUBDIR))
 
 SRCS =	main.c \
 		cd.c echo.c env.c exit.c export_tools.c export.c unset.c \
-		exe.c heredoc.c pipe_redirect.c redirect.c type.c \
+		exe.c heredoc.c pipe_redirect.c redirect.c type.c exe_child.c \
 		add_cmd_utils.c checking_token_type.c checking.c del_empty_node_extra_pipe.c \
 		expander.c lexer.c local_var.c operate_token.c parsing.c pre_handle.c process_re.c \
 		handle_signal.c signal.c \
@@ -27,29 +26,6 @@ SRCS =	main.c \
 
 OBJS = $(SRCS:.c=.o)
 
-SRCS_DIR_B = ./src_bonus
-SRCS_B_BU = $(SRCS_DIR_B)/builtin
-SRCS_B_EX = $(SRCS_DIR_B)/execute
-SRCS_B_PR = $(SRCS_DIR_B)/pre_handle
-SRCS_B_SI = $(SRCS_DIR_B)/signal
-SRCS_B_TO = $(SRCS_DIR_B)/tools
-
-SRCS_B = $(SRCS_DIR_B)/main_bonus.c \
-		$(SRCS_B_BU)/cd_bonus.c $(SRCS_B_BU)/echo_bonus.c $(SRCS_B_BU)/env_bonus.c $(SRCS_B_BU)/exit_bonus.c \
-		$(SRCS_B_BU)/export_tools_bonus.c $(SRCS_B_BU)/export_bonus.c $(SRCS_B_BU)/unset_bonus.c \
-		$(SRCS_B_EX)/exe_bonus.c $(SRCS_B_EX)/heredoc_bonus.c $(SRCS_B_EX)/pipe_redirect_bonus.c \
-		$(SRCS_B_EX)/redirect_bonus.c $(SRCS_B_EX)/type_bonus.c \
-		$(SRCS_B_PR)/add_cmd_utils_bonus.c $(SRCS_B_PR)/checking_token_type_bonus.c \
-		$(SRCS_B_PR)/checking_bonus.c $(SRCS_B_PR)/del_empty_node_extra_pipe_bonus.c \
-		$(SRCS_B_PR)/expander_bonus.c $(SRCS_B_PR)/lexer_bonus.c $(SRCS_B_PR)/local_var_bonus.c \
-		$(SRCS_B_PR)/operate_token_bonus.c $(SRCS_B_PR)/parsing_bonus.c $(SRCS_B_PR)/pre_handle_bonus.c \
-		$(SRCS_B_PR)/process_re_bonus.c $(SRCS_B_PR)/handle_wave_bonus.c\
-		$(SRCS_B_SI)/handle_signal_bonus.c $(SRCS_B_SI)/signal_bonus.c \
-		$(SRCS_B_TO)/error_bonus.c $(SRCS_B_TO)/exe_tools_bonus.c $(SRCS_B_TO)/free_bonus.c \
-		$(SRCS_B_TO)/path_bonus.c $(SRCS_B_TO)/restart_bonus.c $(SRCS_B_TO)/tool_bonus.c \
-		$(SRCS_B_TO)/variable_list_bonus.c
-
-OBJS_B = $(SRCS_B:.c=.o)
 
 all: $(NAME)
 bonus:$(NAMEB)
@@ -69,13 +45,13 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)minishell has been generated.$(DEFAULT)"
 
 clean:
-	@rm -rf $(OBJS) $(OBJS_B)
+	@rm -rf $(OBJS)
 	@${MAKE} -C ${LIBFT} clean
 	@${MAKE} -C ${PRINTF} clean
 	@echo "$(GREEN)OBJS has been cleaned.$(DEFAULT)"
 
 fclean: clean
-	@rm -rf $(NAME) $(NAMEB)
+	@rm -rf $(NAME)
 	@${MAKE} -C ${LIBFT} fclean
 	@${MAKE} -C ${PRINTF} fclean
 	@echo "$(GREEN)minishell has been cleaned.$(DEFAULT)"
