@@ -45,6 +45,7 @@ echo "hello world!"
 ```bash
 cd src/
 ```
+![minishell](https://github.com/user-attachments/assets/9d440a73-03aa-4e32-8091-72ddf2759405)
 
 ## 2. Pre_handle
 
