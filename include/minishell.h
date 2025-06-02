@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 11:00:09 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/14 11:13:06 by jingwu           ###   ########.fr       */
+/*   Updated: 2025/06/02 09:25:50 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		ft_echo(char **cmd);
 // env.c
 int		ft_env(void);
 // exit.c
-void	ft_exit(char **cmd);
+int	ft_exit(char **cmd);
 // export_tools.c
 void	bubble_sort(char **env, int count);
 char	**sort_env(void);

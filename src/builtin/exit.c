@@ -6,7 +6,7 @@
 /*   By: jingwu <jingwu@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:10:04 by yzheng            #+#    #+#             */
-/*   Updated: 2024/11/15 10:04:34 by jingwu           ###   ########.fr       */
+/*   Updated: 2025/06/02 09:25:38 by jingwu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static int	isvalid(char *str)
 	else
 		return (ft_strcmp(str, "9223372036854775807") > 0);
 }
-
 int	ft_exit(char **cmd)
 {
 	int	i;

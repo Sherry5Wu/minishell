@@ -24,28 +24,27 @@ SRCS =	main.c \
 		handle_signal.c signal.c \
 		error.c exe_tools.c free.c path.c restart.c tool.c variable_list.c handle_wave.c
 
-OBJS = $(SRCS:.c=.o)
+OBJS_DIR = ./objs
+OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 
 all: $(NAME)
-bonus:$(NAMEB)
-$(NAMEB): $(OBJS_B)
-	@${MAKE} -C ${LIBFT}
-	@${MAKE} -C ${PRINTF}
-	@$(CC) $(CFLAGS) $(OBJS_B) $(LIBS) -o $(NAMEB)
-	@echo "$(GREEN)minishell_bonus has been generated.$(DEFAULT)"
-%.o: %.c
+
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
+
+$(OBJS_DIR)/%.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $<
 	@echo "Compiling: $(notdir $<)"
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS_DIR) $(OBJS)
 	@${MAKE} -C ${LIBFT}
 	@${MAKE} -C ${PRINTF}
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 	@echo "$(GREEN)minishell has been generated.$(DEFAULT)"
 
 clean:
-	@rm -rf $(OBJS)
+	@rm -rf $(OBJS_DIR)
 	@${MAKE} -C ${LIBFT} clean
 	@${MAKE} -C ${PRINTF} clean
 	@echo "$(GREEN)OBJS has been cleaned.$(DEFAULT)"
